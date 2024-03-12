@@ -1,141 +1,123 @@
-Received: from mail.msweet.org (mail.msweet.org [173.255.209.91])
+Received: from kiki.ratatoskr.org (nrt.misaka.edge.ratatoskr.org [103.170.233.221])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1660144632
-	for <printing-users@lists.linux.dev>; Fri,  2 Feb 2024 15:10:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.209.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2570969D19
+	for <printing-users@lists.linux.dev>; Tue, 12 Mar 2024 10:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.170.233.221
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706886641; cv=none; b=tz2SEfUyrr9X56AfnGZW8U3ww/ku+IehR866Dzdv3GEt9LcOqkYwWMAjNbftvuPpyxcvbSPpeGsP4x1TUS+xYQDs/YaocSh98zMcthm3SFQ15r82e5Azmzl3j14rN2Fp5xvOpZ2tH37qFYLURrBNuinXrlxPMVniQxY7mHeD78U=
+	t=1710241126; cv=none; b=Ki+LYnT/z8YEZvC/5VzUCddJ9V+QReAJ1zJLImVEPHV7IlaZE3tRpZ3ctXqyilPewFvmjSj8spaNgFIrDs97HLFPWibX+TkPS5Gq/w2sDx5b7eA6+x/Aev6SB+e3SNmPw3A/B7HYZwLn7APJRp9QNU6b8mtU02gn2iUsanAZ64w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706886641; c=relaxed/simple;
-	bh=+BwcbW37rQvPf5YsmXwCsmQ09eks4dCXXqYVIHiKXSs=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=f+XB4uKlMa9m+IrP1KCr+h/kPi/BlZom2tduRuOgAQKQBzQUbTY1hEiXwhIfB4AVgq2NFpEZLSzuRp27xw3v27Vqr2UeHCsnpClS4mwbDePvEFqRA7C6MJXT3nhtYCoSKCgLqUHvI1LGuqRCAK4el237RKsubZFLmGlnGdUptEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=msweet.org; spf=pass smtp.mailfrom=msweet.org; dkim=pass (1024-bit key) header.d=msweet.org header.i=@msweet.org header.b=pZ+Ok4xh; arc=none smtp.client-ip=173.255.209.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=msweet.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=msweet.org
+	s=arc-20240116; t=1710241126; c=relaxed/simple;
+	bh=elyou21ZTftl4CCcrZlUeSl2cvVgT7vSdC4JpSvQx14=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=VE+RfMhfvPK5C2xYqT6kWNoUHqkjVwuruFKZ3DxWD/p0Iyd8nfd+CQ0Mt5JsBcfexp7VEiBsGssBaIQK2TcQjDv6ar3CI1WdNn9BYYY5IaWRo77UFTVsRtFpEM0lWILtVhNOFZi9TDel9CRIeHPiAzBPhT45DtEnJA73z8AX6Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bbqporkmccity.com; spf=pass smtp.mailfrom=psrp.bbqporkmccity.com; dkim=pass (1024-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b=xa1U+Je2; dkim=fail (0-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b=nWNka7ZX reason="key not found in DNS"; arc=none smtp.client-ip=103.170.233.221
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bbqporkmccity.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=psrp.bbqporkmccity.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=msweet.org header.i=@msweet.org header.b="pZ+Ok4xh"
-Received: from smtpclient.apple (cbl-66-186-76-47.vianet.ca [66.186.76.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.msweet.org (Postfix) with ESMTPSA id 7476F803D3;
-	Fri,  2 Feb 2024 15:02:55 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.msweet.org 7476F803D3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=msweet.org;
-	s=default; t=1706886175;
-	bh=+BwcbW37rQvPf5YsmXwCsmQ09eks4dCXXqYVIHiKXSs=;
-	h=Subject:From:In-Reply-To:Date:Cc:References:To:From;
-	b=pZ+Ok4xh5pNk1lo2GgPip5+7XuECMoQ8nQWXTUMquMcwZTFAYfmDrNxJCIOXq2F0v
-	 0BXI4pN9f8lx7PWcich8gaCYNn1rkJ8Bf0t0LNlCKmD0KJZLQ6V2lxk2H1yit6R8X8
-	 axADz8wCfqCpkQqFqglBVKq8OoQSNofAu7NH5soo=
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (1024-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b="xa1U+Je2";
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b="nWNka7ZX"
+Resent-Sender: vye5rn@psrp.bbqporkmccity.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=bbqporkmccity.com;
+	s=postal-CBxugg; t=1710241121;
+	bh=WsEKvCOiIDFY6XdLMbEClfZXEMKg406FKmAYBUAyl28=;
+	h=message-id:date:mime-version:from:subject:to:content-type:content-transfer-encoding;
+	b=xa1U+Je20u5QH6/GKMYlfsye0uAr/jPuYCwfqf2+UYB+SjaJngnqAYbNMXLqtgEX81GmWojW
+	4xZbP3M7wMoxlEgvOHtHt1SqJi3H2q72iBCw2XEXRV0z4TK92TmOrFgQIc0Q4WN6+x6qwXkq
+	sCNUdYO2copt6z9IBxCFLl3KQiQ=
+X-Postal-MsgID: FpdFUCg8G1RW
+Received: from para-raid.ratatoskr.org (::ffff:172.24.0.30 [::ffff:172.24.0.30]) by kiki.ratatoskr.org with SMTP; Tue, 12 Mar 2024 10:58:41 -0000
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DC95A2000C9
+	for <printing-users@lists.linux.dev>; Tue, 12 Mar 2024 19:58:28 +0900 (JST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bbqporkmccity.com;
+	s=dkim; t=1710241118; h=from:subject:date:message-id:to:mime-version:content-type:
+	 content-transfer-encoding:content-language;
+	bh=WsEKvCOiIDFY6XdLMbEClfZXEMKg406FKmAYBUAyl28=;
+	b=nWNka7ZX0ftblkOfDMVudbn0TfKU5kIOT1VQA9cW6XsCjmOoc0XVK0vHGXs670y4LkG5k5
+	Yb4EX2JSqbRMgRZJAT8PvHErtgZHzVAbsnI79S4niGxshRJ7FQNML4c+oEv64Jb3ma2FGT
+	ZRC/cBqs3jVa1E0ES+KJiQ4ssoNKmJXO4Lq7wLx2zuAibi1pjxXKxdaE9vwfHNk7rHov42
+	vh8UEjvn9SWaibVB4XiaNsWPNWJLcLuWktXgW/4Bbxwd4FUC9Eu8oXxTxQfIFyujmfSi91
+	azoHI3hGsgbYXYay2GC2NnBaHxcUWrO3I41uJXpWOJoo38OPs6RilDWRTAJuxQ==
+Message-ID: <58aeb234-8818-4c01-888c-eba0106402c6@bbqporkmccity.com>
+Date: Tue, 12 Mar 2024 19:58:28 +0900
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.11\))
-Subject: Re: hplip-printer-app hangs and oddities (Re: Cups automatic duplex
- printing problems)
-From: Michael Sweet <msweet@msweet.org>
-In-Reply-To: <b0aea059-3333-47e8-bdaa-0d0a52002fdd@sessink.nl>
-Date: Fri, 2 Feb 2024 10:02:43 -0500
-Cc: "printing-users@lists.linux.dev" <printing-users@lists.linux.dev>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D50FF68C-206A-415F-8999-D2EA217F065B@msweet.org>
-References: <10196621-8e14-44f5-b1db-b684d2dfdace@sessink.nl>
- <6E7DA164-8E8B-49A8-86BC-C746BF0256C1@msweet.org>
- <5bf4527c-004f-4324-8977-ba2431373d6b@sessink.nl>
- <7CC4FC04-EB2B-4AA4-9244-87016D2B2946@msweet.org>
- <e938a691-098a-46b8-9725-11a3259b6844@redhat.com>
- <e43a7eab-2ca4-4fcb-a345-fb65061b18b8@sessink.nl>
- <SYBP282MB2617E3FA5A60DFE9E56A9A21877C2@SYBP282MB2617.AUSP282.PROD.OUTLOOK.COM>
- <b0aea059-3333-47e8-bdaa-0d0a52002fdd@sessink.nl>
-To: Valentijn Sessink <valentijn@sessink.nl>
-X-Mailer: Apple Mail (2.3774.400.11)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: svpy5jrv3nh1rnoymt4gd1v8fge5r3th69h9yv6i0uob5345mwfxks8vqxj23jc5@bbqporkmccity.com
+Subject: Konica Minolta Bizhub C368 SMB Authentication Issue
+To: printing-users@lists.linux.dev
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-Valentijn,
-
-This sounds like a bug in that printer application - please do file an =
-issue here:
-
-    https://github.com/OpenPrinting/hplip-printer-app/issues
-
-You can also try the "hp-printer-app" snap with that printer.  It will =
-just send PCL to your printer but has fewer moving parts so it should be =
-more reliable.  I'm in the process of updating the snap for updated =
-dependencies but have no pending issues that would affect your =
-printer...
+Hello,
 
 
-> On Feb 1, 2024, at 5:35=E2=80=AFPM, Valentijn Sessink =
-<valentijn@sessink.nl> wrote:
->=20
-> Hi list,
->=20
-> Dougs mention of the Snap repo helped somewhat but also broke somewhat =
-more.
->=20
-> - I tried using the Snap backend, which seemed to help, a 2 sided =
-print comes out 2 sided and a 2 copy 2 sided print comes out in 2 =
-copies. (Or that is what I guessed from the remote printer display that =
-tells me that the latter had 4 sides and printed out on 2 sheets of =
-paper.) So far, so good.
->=20
-> - However. This makes things worse for my personal, unfortunately =
-unbreakable, HP Laserjet 2055DN. I have installed the snap =
-hplip-printer-app (edge) and added the printer, but it's printing raw =
-Postscript every other time (%%@PJL ENTER LANGUAGE =3D Postscript =
-%!PS-Adobe-3.0 %%LanguageLevel: 2).
->=20
-> Trying to use the pcl3 variant seems somewhat better but I've seen the =
-weirdest messages in the logs. I even saw a =
-"hplip-printer-app.hplip-printer-app-server[57930]: Segmentation fault =
-(core dumped)" when I tried to remove a printer - maybe too soon, I'm =
-not sure.
->=20
-> Also, removing jobs sometimes makes hplip-printer-app hang, i.e.  =
-become totally non responsive; I've seen "hp[48675]: io/hpmud/jd.c 632: =
-timeout write_channel hp:/net/HP_LaserJet_P2055dn?ip=3D172.17.2.55" that =
-I don't understand and cannot get rid of, the Snap doesn't properly =
-restart in these situations =
-("snap.hplip-printer-app.hplip-printer-app-server.service: Killing =
-process 54142 (hplip-printer-a) with signal SIGKILL.", "Failed with =
-result 'timeout'" and "Unit process 54133 (hplip-printer-a) remains =
-running after unit stopped."
->=20
-> I've also seen Evince snap hanging during getting printer information, =
-but I'm not in the mood to yet have to debug _another_ printing problem.
->=20
->=20
-> Anyway, I'm guessing: the old way of printing doesn't work anymore for =
-new printers but the new way of printing doesn't work for older printers =
-yet? What should I do if I need the best of both worlds?
->=20
->=20
-> (Also: using the snap printing system makes Libreoffice forget all =
-printers unless Libreoffice is a snap as well, but thats _even_ lower on =
-the todo list than the Evince problem - and probably even off topic =
-here, too).
->=20
-> Best regards,
->=20
-> Valentijn
->=20
-> On 31-01-2024 12:38, Douglas Kosovic wrote:
->> Hi Valentijn,
-> [...]
->> You could then try the official OpenPrinting Snap of CUPS for a much =
-newer version of CUPS that has many bug fixes:
->> https://snapcraft.io/install/cups/ubuntu
->> I believe Ubuntu will be moving to the CUPS Snap for its printing =
-system in a future release
-> --=20
-> Durgerdamstraat 29, 1507 JL Zaandam; telefoon 075-7100071
->=20
+I am trying to print to a Konica Minolta Bizhub C368 that is shared over 
+a Active Directory joined Windows Server with AD user authentication. I 
+am able to successfully print a test page if I directly connect to the 
+socket://<C368 IP address>:9100 with the following settings in the "User 
+Authentication" tab:
 
-________________________
-Michael Sweet
+User Authentication: 	MFP
+Authentication Server: 	1
+Username: 	Custom
+Name: 	Public
+Password: 	None
 
+However, if I update the URL to 
+`smb://DOMAIN%5CUSER:Pa%24%24w0rd@printserver/C368`, I am not able to print.
+
+/etc/cups/printers.conf
+
+# Printer configuration file for CUPS v2.4.7
+# Written by cupsd
+# DO NOT EDIT THIS FILE WHEN CUPSD IS RUNNING
+NextPrinterId 25
+<Printer C368>
+PrinterId 24
+UUID urn:uuid:c13b563e-fed7-3165-5568-bbe765504b9a
+AuthInfoRequired username,password
+Info
+Location PrintRoom
+MakeModel KONICA MINOLTA C368SeriesPS(P) BEU v1.4
+DeviceURI smb://DOMAIN%5CUSER:Pa%24%24w0rd@printserver/C368
+State Idle
+StateTime 1710220801
+ConfigTime 1710220962
+Type 8401100
+Accepting Yes
+Shared No
+JobSheets none none
+QuotaPeriod 0
+PageLimit 0
+KLimit 0
+OpPolicy default
+ErrorPolicy stop-printer
+Attribute marker-colors 
+\#00FFFF,#FF00FF,#FFFF00,#000000,none,none,none,none,none,none,none,none,none
+Attribute marker-levels 73,25,71,96,-1,-1,-1,-1,-1,-1,-1,-1,-1
+Attribute marker-names Toner (Cyan),Toner (Magenta),Toner (Yellow),Toner 
+(Black),,,,,,,,,Waste Toner Box
+Attribute marker-types 
+toner,toner,toner,toner,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,waste-toner
+Attribute marker-change-time 1710220279
+</Printer>
+
+
+Following status is shown:
+
+ID	Name	User	Size	Pages	State	Control
+C368-201    	Unknown  	Withheld  	179k  	Unknown  	held since
+Tue 12 Mar 2024 02:19:52 PM JST  	Held for authentication.
+
+then the job disappears as if it printed successfully.
+
+Why is the status "Held for authentication"? I have already entered the 
+credentials in the URL and the "User Authentication" tab. Any guidance 
+on how to solve this issue is welcome. Thank you.
