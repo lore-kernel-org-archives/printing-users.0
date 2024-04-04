@@ -1,123 +1,50 @@
-Received: from kiki.ratatoskr.org (nrt.misaka.edge.ratatoskr.org [103.170.233.221])
+Received: from shymkent.ilbers.de (shymkent.ilbers.de [85.214.156.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2570969D19
-	for <printing-users@lists.linux.dev>; Tue, 12 Mar 2024 10:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.170.233.221
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C457D134721
+	for <printing-users@lists.linux.dev>; Thu,  4 Apr 2024 19:54:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.156.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710241126; cv=none; b=Ki+LYnT/z8YEZvC/5VzUCddJ9V+QReAJ1zJLImVEPHV7IlaZE3tRpZ3ctXqyilPewFvmjSj8spaNgFIrDs97HLFPWibX+TkPS5Gq/w2sDx5b7eA6+x/Aev6SB+e3SNmPw3A/B7HYZwLn7APJRp9QNU6b8mtU02gn2iUsanAZ64w=
+	t=1712260501; cv=none; b=Y/1lMzsDZpu0j9VTAVFy1UYVltU2tR2nCZqRFaqWxUrtiwbV7cWPfqXv6g2mnbkPKvjod0FoowP+cw6gDNBJ2iACT5KMQKpWICBrS/+dvJjJ8DUCKwxV2Ut4MGOP/NbWew6BvTQiBDnWUTUPUoWa+c1zrPHPir5Z7x44H3ebX6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710241126; c=relaxed/simple;
-	bh=elyou21ZTftl4CCcrZlUeSl2cvVgT7vSdC4JpSvQx14=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=VE+RfMhfvPK5C2xYqT6kWNoUHqkjVwuruFKZ3DxWD/p0Iyd8nfd+CQ0Mt5JsBcfexp7VEiBsGssBaIQK2TcQjDv6ar3CI1WdNn9BYYY5IaWRo77UFTVsRtFpEM0lWILtVhNOFZi9TDel9CRIeHPiAzBPhT45DtEnJA73z8AX6Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bbqporkmccity.com; spf=pass smtp.mailfrom=psrp.bbqporkmccity.com; dkim=pass (1024-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b=xa1U+Je2; dkim=fail (0-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b=nWNka7ZX reason="key not found in DNS"; arc=none smtp.client-ip=103.170.233.221
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bbqporkmccity.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=psrp.bbqporkmccity.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b="xa1U+Je2";
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=bbqporkmccity.com header.i=@bbqporkmccity.com header.b="nWNka7ZX"
-Resent-Sender: vye5rn@psrp.bbqporkmccity.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=bbqporkmccity.com;
-	s=postal-CBxugg; t=1710241121;
-	bh=WsEKvCOiIDFY6XdLMbEClfZXEMKg406FKmAYBUAyl28=;
-	h=message-id:date:mime-version:from:subject:to:content-type:content-transfer-encoding;
-	b=xa1U+Je20u5QH6/GKMYlfsye0uAr/jPuYCwfqf2+UYB+SjaJngnqAYbNMXLqtgEX81GmWojW
-	4xZbP3M7wMoxlEgvOHtHt1SqJi3H2q72iBCw2XEXRV0z4TK92TmOrFgQIc0Q4WN6+x6qwXkq
-	sCNUdYO2copt6z9IBxCFLl3KQiQ=
-X-Postal-MsgID: FpdFUCg8G1RW
-Received: from para-raid.ratatoskr.org (::ffff:172.24.0.30 [::ffff:172.24.0.30]) by kiki.ratatoskr.org with SMTP; Tue, 12 Mar 2024 10:58:41 -0000
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id DC95A2000C9
-	for <printing-users@lists.linux.dev>; Tue, 12 Mar 2024 19:58:28 +0900 (JST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bbqporkmccity.com;
-	s=dkim; t=1710241118; h=from:subject:date:message-id:to:mime-version:content-type:
-	 content-transfer-encoding:content-language;
-	bh=WsEKvCOiIDFY6XdLMbEClfZXEMKg406FKmAYBUAyl28=;
-	b=nWNka7ZX0ftblkOfDMVudbn0TfKU5kIOT1VQA9cW6XsCjmOoc0XVK0vHGXs670y4LkG5k5
-	Yb4EX2JSqbRMgRZJAT8PvHErtgZHzVAbsnI79S4niGxshRJ7FQNML4c+oEv64Jb3ma2FGT
-	ZRC/cBqs3jVa1E0ES+KJiQ4ssoNKmJXO4Lq7wLx2zuAibi1pjxXKxdaE9vwfHNk7rHov42
-	vh8UEjvn9SWaibVB4XiaNsWPNWJLcLuWktXgW/4Bbxwd4FUC9Eu8oXxTxQfIFyujmfSi91
-	azoHI3hGsgbYXYay2GC2NnBaHxcUWrO3I41uJXpWOJoo38OPs6RilDWRTAJuxQ==
-Message-ID: <58aeb234-8818-4c01-888c-eba0106402c6@bbqporkmccity.com>
-Date: Tue, 12 Mar 2024 19:58:28 +0900
+	s=arc-20240116; t=1712260501; c=relaxed/simple;
+	bh=AHCkuc8KPL87uH5G9wnEorlJYV2OY+8VUWaaeeif4dM=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=PmBrCJLxM4iDR9pxnPWjVDglZ0mY8pcVfGDkMXCnFiKaG9WZJ2f6+S/AwGIgmBKmQ0earFp45t9pPdkqnQ4JML72DOxgsQvX0bF0EzMqRIlwCa6righBpF0vAlEKtvyPZ8u3A8/dF+J4G698ntpguArye/W//yG2Uz2+zeIc5wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=radix50.net; spf=pass smtp.mailfrom=radix50.net; arc=none smtp.client-ip=85.214.156.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=radix50.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radix50.net
+Received: from ilbers.de (ipbcc051c6.dynamic.kabel-deutschland.de [188.192.81.198])
+	(authenticated bits=0)
+	by shymkent.ilbers.de (8.15.2/8.15.2/Debian-8+deb9u1) with ESMTPSA id 434JstmF030632
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <printing-users@lists.linux.dev>; Thu, 4 Apr 2024 21:54:57 +0200
+Date: Thu, 4 Apr 2024 21:54:50 +0200
+From: Baurzhan Ismagulov <ibr@radix50.net>
+To: printing-users@lists.linux.dev
+Subject: Canon MF657Cdw support
+Message-ID: <Zg8FisNEtycH8xLp@ilbers.de>
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: svpy5jrv3nh1rnoymt4gd1v8fge5r3th69h9yv6i0uob5345mwfxks8vqxj23jc5@bbqporkmccity.com
-Subject: Konica Minolta Bizhub C368 SMB Authentication Issue
-To: printing-users@lists.linux.dev
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
 Hello,
 
+I have a 10-year old HP M570dn with a transfer unit leaving stripes. A
+replacement would cost 317 EUR, plus 50 EUR service fee. For this amount I see
+e.g. Canon MF657Cdw which claims to support AirPrint. However,
+https://lore.kernel.org/printing-architecture/3722d77c-bac7-c6d3-8851-bed47902158e@redhat.com/
+says some models have issues and can't be used driverless. I would be happy to
+hear your opinions:
 
-I am trying to print to a Konica Minolta Bizhub C368 that is shared over 
-a Active Directory joined Windows Server with AD user authentication. I 
-am able to successfully print a test page if I directly connect to the 
-socket://<C368 IP address>:9100 with the following settings in the "User 
-Authentication" tab:
+1. Repair or buy?
 
-User Authentication: 	MFP
-Authentication Server: 	1
-Username: 	Custom
-Name: 	Public
-Password: 	None
+2. Experiences with Canon MF657Cdw? Or other recommendations?
 
-However, if I update the URL to 
-`smb://DOMAIN%5CUSER:Pa%24%24w0rd@printserver/C368`, I am not able to print.
-
-/etc/cups/printers.conf
-
-# Printer configuration file for CUPS v2.4.7
-# Written by cupsd
-# DO NOT EDIT THIS FILE WHEN CUPSD IS RUNNING
-NextPrinterId 25
-<Printer C368>
-PrinterId 24
-UUID urn:uuid:c13b563e-fed7-3165-5568-bbe765504b9a
-AuthInfoRequired username,password
-Info
-Location PrintRoom
-MakeModel KONICA MINOLTA C368SeriesPS(P) BEU v1.4
-DeviceURI smb://DOMAIN%5CUSER:Pa%24%24w0rd@printserver/C368
-State Idle
-StateTime 1710220801
-ConfigTime 1710220962
-Type 8401100
-Accepting Yes
-Shared No
-JobSheets none none
-QuotaPeriod 0
-PageLimit 0
-KLimit 0
-OpPolicy default
-ErrorPolicy stop-printer
-Attribute marker-colors 
-\#00FFFF,#FF00FF,#FFFF00,#000000,none,none,none,none,none,none,none,none,none
-Attribute marker-levels 73,25,71,96,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Attribute marker-names Toner (Cyan),Toner (Magenta),Toner (Yellow),Toner 
-(Black),,,,,,,,,Waste Toner Box
-Attribute marker-types 
-toner,toner,toner,toner,unknown,unknown,unknown,unknown,unknown,unknown,unknown,unknown,waste-toner
-Attribute marker-change-time 1710220279
-</Printer>
-
-
-Following status is shown:
-
-ID	Name	User	Size	Pages	State	Control
-C368-201    	Unknown  	Withheld  	179k  	Unknown  	held since
-Tue 12 Mar 2024 02:19:52 PM JST  	Held for authentication.
-
-then the job disappears as if it printed successfully.
-
-Why is the status "Held for authentication"? I have already entered the 
-credentials in the URL and the "User Authentication" tab. Any guidance 
-on how to solve this issue is welcome. Thank you.
+With kind regards,
+Baurzhan
