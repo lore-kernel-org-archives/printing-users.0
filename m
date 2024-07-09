@@ -1,50 +1,51 @@
-Received: from mail.msweet.org (mail.msweet.org [173.255.209.91])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08532BA46
-	for <printing-users@lists.linux.dev>; Mon,  8 Jul 2024 22:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.209.91
+Received: from filter.openoffice.nl (filter.openoffice.nl [144.76.204.185])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9F661D556
+	for <printing-users@lists.linux.dev>; Tue,  9 Jul 2024 08:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.204.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720477814; cv=none; b=jNOFNhDc5HtPbGVFOURnUAeuQ3EVXoXhJheT9Y5ee+PDVN99uvvUMXr5maEDQkr5aglSSVeODU9fuDjDCmbsEtUczNQDpeSW1PBw0w70YOATI2YpSsLI/hjYykyq+kdXtg3uB3OqRFm5Gs5iK1tVN+0HO74uT8NB/PhhCwnnZ1Q=
+	t=1720513152; cv=none; b=o6aeeVi5vGuVxlm5tozA161Id8kxaVodnJC/eptdizFSYaQDLYiYhYwGd942Fn4eC7uNuugmmawdiL8iHHGmnKsfR7J+uoNrfpwKldarSq1sjJwJyRC2IOIg8Wf9l8OyxhCRCbeLtZ9CPOrhQBwifo8XhWP7kKWPtyB4P/QUw1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720477814; c=relaxed/simple;
-	bh=vq6+DWRhBJtpmvIe1YLUl6JyCPqhv4KRWV55S0Z8h7g=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ldv3sLsXI59kbMb68wDTtzbxi+u6Kc/vkgWkU2oZbBMr9NR1U+0I2vtlb0Dzs2pWrJJEbFJxvuXzvhR120dFN4cgUxKA8y3DED3tQsYotbpED9DxGUh+Rf5/moSO0EznOBvGvL0ytvSxSj/oj7ytN2ATZ2xM7z4b3bfAQLCEDr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=msweet.org; spf=pass smtp.mailfrom=msweet.org; dkim=pass (1024-bit key) header.d=msweet.org header.i=@msweet.org header.b=lS5+xnPw; arc=none smtp.client-ip=173.255.209.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=msweet.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=msweet.org
+	s=arc-20240116; t=1720513152; c=relaxed/simple;
+	bh=8nPDOeI2G+wtqWoSTpjMS6M+st/UDUs9qhjMh4TtWTg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NeuS2Ry10Fdq2YQuulrfQpSE5jkAhdd4n0pOfAy0yoWsTpXhjWEA2RYYjSEXqpKZ5TXVyhlShnH8a/iU+KslkGzFrt2UPJ1MhEDA+kb2FDLMDymkqeW554w5a+s0qOCuM0sgKE4d1qKgq5BSNTuOGmiQjqksvBM4uk+4Ahn7GS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sessink.nl; spf=pass smtp.mailfrom=sessink.nl; dkim=pass (1024-bit key) header.d=sessink.nl header.i=@sessink.nl header.b=oUReP7yk; arc=none smtp.client-ip=144.76.204.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sessink.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sessink.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=msweet.org header.i=@msweet.org header.b="lS5+xnPw"
-Received: from smtpclient.apple (cbl-66-186-76-47.vianet.ca [66.186.76.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.msweet.org (Postfix) with ESMTPSA id 2CABE81C9E;
-	Mon,  8 Jul 2024 22:21:27 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.msweet.org 2CABE81C9E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=msweet.org;
-	s=default; t=1720477287;
-	bh=vq6+DWRhBJtpmvIe1YLUl6JyCPqhv4KRWV55S0Z8h7g=;
-	h=Subject:From:In-Reply-To:Date:Cc:References:To:From;
-	b=lS5+xnPwreFVKZnJ1FOYaUUFiOhf/ks62l7En4LC/tIQ88xvtuzANEAdRsDyC0mbs
-	 a+zvsExvo9OL0OmwIlukqtQlKKIrL/0ZdItxEuJ7sVGAVyvqVwNGhWQe1uTnjTtifR
-	 1yDOe/NL/ZZ8NJJaACQPYVmmdYwWTgl3ARnR9kLg=
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (1024-bit key) header.d=sessink.nl header.i=@sessink.nl header.b="oUReP7yk"
+Received: from localhost (localhost [127.0.0.1])
+	by filter.openoffice.nl (Postfix) with ESMTP id 17BE61006E7;
+	Tue,  9 Jul 2024 10:19:06 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at filter.openoffice.nl
+Received: from filter.openoffice.nl ([IPv6:::1])
+	by localhost (filter.openoffice.nl [IPv6:::1]) (amavisd-new, port 10024)
+	with ESMTP id 3WcD1XjJOHGZ; Tue,  9 Jul 2024 10:19:03 +0200 (CEST)
+Received: from blub.net (mail.blub.net [95.217.39.243])
+	by filter.openoffice.nl (Postfix) with ESMTP id C26CA1004E5;
+	Tue,  9 Jul 2024 10:19:03 +0200 (CEST)
+Received: from [IPV6:2a02:a46d:bbe9:0:6b63:d6a7:2e33:1c11] (2a02-a46d-bbe9-0-6b63-d6a7-2e33-1c11.fixed6.kpn.net [IPv6:2a02:a46d:bbe9:0:6b63:d6a7:2e33:1c11])
+	by blub.net (Postfix) with ESMTPSA id 91E113002F8;
+	Tue,  9 Jul 2024 10:19:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sessink.nl; s=201802;
+	t=1720513143; bh=8nPDOeI2G+wtqWoSTpjMS6M+st/UDUs9qhjMh4TtWTg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oUReP7ykLosnGE1mcHsT8pXZimZ7JKCPZxMMZ5cTqNYtluMNmYxXUUFj/+VjzZxFC
+	 BfWqsi1x+6u6HjIh7wAuhms48l39prCkv8m1cQ2FdyKZ0Kfr3fyncYybes+hh09+ay
+	 7eAaudH3vKhO/d2OgB3EGsJcOKXi/Mb0Fo+4vB3Y=
+Message-ID: <92f812ad-4674-470a-8dc2-a1dd9488637b@sessink.nl>
+Date: Tue, 9 Jul 2024 10:19:02 +0200
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.32\))
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: hplip-printer-app hangs and oddities (Re: Cups automatic duplex
  printing problems)
-From: Michael Sweet <msweet@msweet.org>
-In-Reply-To: <47f41feb-8b4e-4840-9336-6ce705086dcb@sessink.nl>
-Date: Mon, 8 Jul 2024 18:21:15 -0400
+To: Michael Sweet <msweet@msweet.org>
 Cc: "printing-users@lists.linux.dev" <printing-users@lists.linux.dev>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C5628583-E69F-4CB4-B39D-5A1DCA15E401@msweet.org>
 References: <10196621-8e14-44f5-b1db-b684d2dfdace@sessink.nl>
  <6E7DA164-8E8B-49A8-86BC-C746BF0256C1@msweet.org>
  <5bf4527c-004f-4324-8977-ba2431373d6b@sessink.nl>
@@ -56,56 +57,68 @@ References: <10196621-8e14-44f5-b1db-b684d2dfdace@sessink.nl>
  <D50FF68C-206A-415F-8999-D2EA217F065B@msweet.org>
  <4825bc26-5434-44ff-85c1-c851a5a7cb89@sessink.nl>
  <47f41feb-8b4e-4840-9336-6ce705086dcb@sessink.nl>
-To: Valentijn Sessink <valentijn@sessink.nl>
-X-Mailer: Apple Mail (2.3776.700.32)
+ <C5628583-E69F-4CB4-B39D-5A1DCA15E401@msweet.org>
+Content-Language: nl-NL
+From: Valentijn Sessink <valentijn@sessink.nl>
+In-Reply-To: <C5628583-E69F-4CB4-B39D-5A1DCA15E401@msweet.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Valentijn,
+Hi Michael, hello list,
 
-Does the PPD file in question have any JCL options (look for JCLOpenUI)?
+On 09-07-2024 00:21, Michael Sweet wrote:
+> Does the PPD file in question have any JCL options (look for JCLOpenUI)?
 
-It is possible that the JCL code is missing a trailing newline which =
-could cause this - in which case we should append one to make sure the =
-JCL code doesn't prevent language switching...
+Yes it does (please see bug report, sorry it wasn't clickable due to the 
+missing "h"). For your convenience:
+https://github.com/OpenPrinting/hplip-printer-app/issues/17
 
+> It is possible that the JCL code is missing a trailing newline which could cause this - in which case we should append one to make sure the JCL code doesn't prevent language switching...
 
-> On Jul 8, 2024, at 2:29=E2=80=AFPM, Valentijn Sessink =
-<valentijn@sessink.nl> wrote:
->=20
-> Hi list,
->=20
-> I'm replying to a very old message of mine. I tried to fix =
-ttps://github.com/OpenPrinting/hplip-printer-app/issues/17 because I =
-like my postscript printers to actually print postscript. Yes, I'm that =
-kind of nerd.
->=20
-> Anyway, I sort of fixed the bug but I don't know why. So it's probably =
-rubbish that I made, I just don't grasp the code path here.
->=20
-> I switched the last two lines of ppdEmitJCL() and suddenly
->=20
-> On 02-02-2024 16:10, Valentijn Sessink wrote:
->> %%@PJL ENTER LANGUAGE =3D PostScript
->=20
-> ... the two %% are gone.
->=20
-> But this code has been there for ages. Has postscript with PJL been =
-broken since 2014? I can't imagine that.
->=20
-> Would anyone please know why a normal Postscript printer with a PJL =
-definition in its PPD file
-> *JCLToPSInterpreter: "@PJL ENTER LANGUAGE =3D PostScript <0A>"
-> ... would print %%@PJL ENTER LANGUAGE (with two extra %% signs)?
->=20
-> Sorry for the voodoo code (semi-randomly switching two lines of code). =
-With printers, I just cannot seem to avoid it :-(
->=20
-> Best regards,
->=20
-> Valentijn
-> --=20
-> Durgerdamstraat 29, 1507 JL Zaandam; telefoon 075-7100071
->=20
+Nope, there actually is a <0A> at the end, I did check that.
 
-________________________
-Michael Sweet
+But please note that the %% is at the *beginning* of a PJL line, i.e. 
+there are postscript comments already, where PJL is still being sent to 
+the printer:
 
+·%-12345X@PJL
+@PJL JOB NAME = "Test Page" DISPLAY = "4 valentyn Test Page"
+@PJL SET USERNAME = "valentyn"
+%%@PJL ENTER LANGUAGE = PostScript
+%!PS-Adobe-3.0
+
+I can't figure out the code path. But if I change the code at the end of 
+ppdEmitJCL() to:
+
+   ppdEmit(ppd, fp, PPD_ORDER_JCL);
+   fputs(ppd->jcl_end, fp);
+   fputs(ppd->jcl_ps, fp);
+
+... _and_ change the PPD file to say:
+*JCLEnd: "END-OF-TASK<0A>"
+
+... then the output to the printer says:
+
+@PJL SET USERNAME = "valentyn"
+%%END-OF-TASK
+@PJL ENTER LANGUAGE = PostScript
+%!PS-Adobe-3.0
+
+So somewhere, something says "%%" to the printer, while there is still 
+some PJL to be sent. But as said: I can't figure out the code path.
+
+I can't think of anything else to try. Tried to get DEBUG_printf to work 
+but my grasp of the whole cups/filtering stuff is too small to actually 
+be able to get that to work. Also, "debian/rules clean" for some reason 
+messes up the code base and I'm sort of unable to rebuild cleanly 
+without re-unpacking the debian source. But that's all in the category 
+of "I'm not an actual programmer" so you shouldn't bother.
+
+But it is an actual bug that could potentially bug all printers with a 
+ppd file that has PJL commands.
+
+Best regards,
+
+Valentijn
+-- 
+Durgerdamstraat 29, 1507 JL Zaandam; telefoon 075-7100071
