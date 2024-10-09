@@ -1,40 +1,28 @@
-Received: from filter.openoffice.nl (filter.openoffice.nl [144.76.204.185])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A42B16D305
-	for <printing-users@lists.linux.dev>; Thu, 11 Jul 2024 13:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.204.185
+Received: from outbound1.mail.transip.nl (outbound1.mail.transip.nl [149.210.149.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347931E0E1C
+	for <printing-users@lists.linux.dev>; Wed,  9 Oct 2024 15:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=149.210.149.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720703171; cv=none; b=R/iXDmYSdnjmfKsjQkeoEtB5LGhB2BW7LnteDTPLy5kik3XeHFnvT8EhEyjn40wsNC8WLs9sQ+l6zrK8Y2H2Ip/WIDXMErJuRUwCrhKYN70Io2VCIyLVxGHBj8sqAMkV0ikCrGGCvZ8nHO3oHhD/uOD7umFYGA766kg0x1sMN3U=
+	t=1728487047; cv=none; b=kGKNZN8mcssQbpRM6ICi2cT33jJ6q4j23exbrFEenmJs4vK6tg4e9I48ugidTHYeQsHG8Q8Nn7iuzhlFSRTQXm7xU3hVh3wPIRyvao3CPIn4XIpmiN4XUvI3LZEq6BTzNDNKzBwTiItAASjQhx8WMiH+BaFpsni/MI7M6vISK6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720703171; c=relaxed/simple;
-	bh=CRglg5tClTYQ98QaTjUBeNpKGTFLwO3e448eugddkcg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GCnRjZK6/Sx6JHbT+ukjsFRWXY5D59WGwLwRYz4T7LiWc0TvwG04igLaoqEnROcgHudrm8D9U+8RGIpbMPqgs3u6RZUxVsm94JyRvrh1K0hOnCMdl0I1S/hPYb/hqPz9GjDfLaB8zQki1qdL0NwzaWqEcLYqQL5GHUEZo7D5GEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sessink.nl; spf=pass smtp.mailfrom=sessink.nl; dkim=pass (1024-bit key) header.d=sessink.nl header.i=@sessink.nl header.b=YF6AJnTz; arc=none smtp.client-ip=144.76.204.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sessink.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sessink.nl
+	s=arc-20240116; t=1728487047; c=relaxed/simple;
+	bh=B8lr5ZfCZgBy1YRyI2Oh2b+7Vi8NXO1WdhoxgmFCO3E=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=D9rBnIJEiBJZeX3lZzfIGTgGh0Zm/kvODrdCmw/trM1n3HRTsPYz0AmFFvE3LZ/y98mo8OLPx80ikeIp1y4FvOxu2JatDC+3QPEaHp9XedKLrRilCB9bZuBBnKm6B62Ix4aHf0IfccI+0SrJiLw19asTqit9R9d7ZoPWWektG5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Julf.com; spf=pass smtp.mailfrom=Julf.com; dkim=pass (2048-bit key) header.d=julf.com header.i=@julf.com header.b=Kbg7g46n; arc=none smtp.client-ip=149.210.149.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Julf.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=Julf.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sessink.nl header.i=@sessink.nl header.b="YF6AJnTz"
-Received: from localhost (localhost [127.0.0.1])
-	by filter.openoffice.nl (Postfix) with ESMTP id A45571009F2;
-	Thu, 11 Jul 2024 15:05:59 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at filter.openoffice.nl
-Received: from filter.openoffice.nl ([IPv6:::1])
-	by localhost (filter.openoffice.nl [IPv6:::1]) (amavisd-new, port 10024)
-	with ESMTP id 6voJeMxeROCp; Thu, 11 Jul 2024 15:05:57 +0200 (CEST)
-Received: from blub.net (mail.blub.net [95.217.39.243])
-	by filter.openoffice.nl (Postfix) with ESMTP id 6AFD210077D;
-	Thu, 11 Jul 2024 15:05:57 +0200 (CEST)
-Received: from [IPV6:2a02:a46d:bbe9:0:81ba:cf91:701e:6fd3] (2a02-a46d-bbe9-0-81ba-cf91-701e-6fd3.fixed6.kpn.net [IPv6:2a02:a46d:bbe9:0:81ba:cf91:701e:6fd3])
-	by blub.net (Postfix) with ESMTPSA id 36A6E300116;
-	Thu, 11 Jul 2024 15:05:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sessink.nl; s=201802;
-	t=1720703157; bh=CRglg5tClTYQ98QaTjUBeNpKGTFLwO3e448eugddkcg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YF6AJnTz2cwdd+WOIVOnvjIG3aO7GfPRTCnOXCzchVprt1Pa95oZIkzeKJq6qf3CR
-	 ZKQCHOF13ze130clx7jGGfqxYuHhfXmNH/OzCW3RaMGhNHGbzfYSubEcXfzyWcBW8I
-	 tJuUjNG7Cc8O48KQ2crQK62s8VGfjLclVuOOaHBM=
-Message-ID: <09bdb923-393d-4608-b88e-74d0ab3c5c9d@sessink.nl>
-Date: Thu, 11 Jul 2024 15:05:56 +0200
+	dkim=pass (2048-bit key) header.d=julf.com header.i=@julf.com header.b="Kbg7g46n"
+Received: from submission8.mail.transip.nl (unknown [10.103.8.159])
+	by outbound1.mail.transip.nl (Postfix) with ESMTP id 4XNx8b3RmKzRhrq
+	for <printing-users@lists.linux.dev>; Wed,  9 Oct 2024 17:07:59 +0200 (CEST)
+Received: from [172.24.42.151] (julf.connected.by.freedominter.net [45.138.231.4])
+	by submission8.mail.transip.nl (Postfix) with ESMTPA id 4XNx8Z6V7zz2npc8w
+	for <printing-users@lists.linux.dev>; Wed,  9 Oct 2024 17:07:58 +0200 (CEST)
+Message-ID: <992686da-6f09-4c3c-8f87-0a65934abaf0@Julf.com>
+Date: Wed, 9 Oct 2024 17:07:56 +0200
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
@@ -42,52 +30,88 @@ List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: hplip-printer-app hangs and oddities (Re: Cups automatic duplex
- printing problems)
-To: Michael Sweet <msweet@msweet.org>
-Cc: "printing-users@lists.linux.dev" <printing-users@lists.linux.dev>
-References: <10196621-8e14-44f5-b1db-b684d2dfdace@sessink.nl>
- <6E7DA164-8E8B-49A8-86BC-C746BF0256C1@msweet.org>
- <5bf4527c-004f-4324-8977-ba2431373d6b@sessink.nl>
- <7CC4FC04-EB2B-4AA4-9244-87016D2B2946@msweet.org>
- <e938a691-098a-46b8-9725-11a3259b6844@redhat.com>
- <e43a7eab-2ca4-4fcb-a345-fb65061b18b8@sessink.nl>
- <SYBP282MB2617E3FA5A60DFE9E56A9A21877C2@SYBP282MB2617.AUSP282.PROD.OUTLOOK.COM>
- <b0aea059-3333-47e8-bdaa-0d0a52002fdd@sessink.nl>
- <D50FF68C-206A-415F-8999-D2EA217F065B@msweet.org>
- <4825bc26-5434-44ff-85c1-c851a5a7cb89@sessink.nl>
- <47f41feb-8b4e-4840-9336-6ce705086dcb@sessink.nl>
- <C5628583-E69F-4CB4-B39D-5A1DCA15E401@msweet.org>
- <92f812ad-4674-470a-8dc2-a1dd9488637b@sessink.nl>
- <F430A113-E0D9-45BB-A047-7545C2F7F05C@msweet.org>
-Content-Language: nl-NL
-From: Valentijn Sessink <valentijn@sessink.nl>
-In-Reply-To: <F430A113-E0D9-45BB-A047-7545C2F7F05C@msweet.org>
+To: printing-users@lists.linux.dev
+Content-Language: en-US
+From: Johan Helsingius <julf@Julf.com>
+Subject: Canon LBP series network printers (CAPS)
+Autocrypt: addr=julf@Julf.com; keydata=
+ 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
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Scanned-By: ClueGetter at submission8.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=julf.com; t=1728486478; h=from:subject:to:date:
+ mime-version:content-type;
+ bh=LgODmv5ns2KLL1oJ6X4h96q9lZZHh8+aNRA2D5aH4nc=;
+ b=Kbg7g46ngfb46KMFEojsc2oVi/DSIICCUoLStroH+/k/mfIm3yrMPGtRiLTDBylAKq2376
+ QvQhK5yT1dVbrDpxfxn8cfkoP671khtAS49r9da7dCM3jbBFcQoGpzsFVwwwUBS6PbjZVO
+ qgbWX4zNyzT9BF1x82oQ/zGIqVFxqzBcDa2FIaEpUvWajls/DWsxCMK6QnwCfjFD62Or/w
+ 9fuRxqrlvSaft9E+qogIKZHrg7iUu2GABnWRuBAloA0Q8kw4GN/4TWbQfP8hmhcXD1ec+i
+ LFVYXQqJksQz3lCGrcU4WxI8CqVuZyEpDUvCoRJuF/FHtgc7Q4j4pU4aYja74A==
+X-Report-Abuse-To: abuse@transip.nl
 
-Hi,
+Hello everyone,
 
-On 11-07-2024 13:52, Michael Sweet wrote:
-> If this affected all PS printers we would have heard about it a long time ago.
+I have a Canon LBP7210Cdn network laser printer that talks
+USB and apparently AppSocket / HP JetDirect (as it listens
+to port 9100).
 
-Only those with JCL in the PPD. And I just checked:
-$ /usr/lib/cups/driver/postscript-hp list | wc -l
-1184
+I somehow got it to work with CUPS 2-3 years ago, but of
+course I didn't document the magic incantations I went
+trough.
 
-... but only some 200 have '^*JCL' in their ppd's and only 175 have 
-^*JCLToPSInterpreter. There are *very* old printers among these. Most of 
-these printers will happily print PCL and I'm not sure people try to 
-dive into the source for problems like this.
+Now I had to reinstall my OS (either my kernel got
+corrupted or I got hit by the cups-browsed exploit
+as suddenly shell startup took forever, and ps / top
+stopped working).
 
-> I will see if I can determine what is going wrong - the whole build process for this printer application will make debugging challenging... :/
+Anyway, no matter what I do I can't get CUPS to work
+with the printer. Tried the stuff from the Canon website,
+tried other stuff, both network and USB, but no cigar.
 
-Yes it is...
+My OS is Linux (Devuan Daedalus).
 
-Thank you for looking into this! (I added the PPD to the bug report)
+Any hints, pointers or advice greatly appreciated!
 
-Best regards,
-
-Valentijn
--- 
-Durgerdamstraat 29, 1507 JL Zaandam; telefoon 075-7100071
+	Julf
