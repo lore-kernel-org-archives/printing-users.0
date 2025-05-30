@@ -1,163 +1,140 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ms-10.1blu.de (ms-10.1blu.de [178.254.4.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7458F17D2;
-	Fri, 14 Mar 2025 19:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4715521578F
+	for <printing-users@lists.linux.dev>; Fri, 30 May 2025 09:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.254.4.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741981387; cv=none; b=E+808DciwqSLy/TQLqO2YRKQ9hHYN616j9LRBakMrYASxuuCOqkPz072vfm+ajaq7h9WP/pjDbs4EaGkV2w6cyX5kP4yBaembH3xfgd2YqzdZrP/5lrRSfGwUshQK9M+9zq5Pgi5fGz1XaYcXj1mgCMv3uVQD9LOz1pLOx4fDjY=
+	t=1748596811; cv=none; b=eV/BSSPCF+G8k0j6kTmzufg17RG5tFh4JI3JjOX2rApf9iZ7qLRku82dPxLE6CvaS3xXk05pK4iS7Ep0t23mr3Afo9OYQfmCPPwqcd0EU4kCsKeknAzO1ApsyE19i9xIspNHDHSeBl695ItGvvrLguLBZEz0pNRkrTxjndKafvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741981387; c=relaxed/simple;
-	bh=0cek4zicYSAilemNtWiJrixntaXoy3H/CrN+ktAhL9k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=nhpv83Hkd4lpkl0oc1IWThL0yH8DiZpmTG3cbrGg7GHU0Atc9FUak52+hUbQ9blitoocGXwj8xKgsV+AuUm0aumkQMOjGTf7hlAGhKIrcJapX5YSOIPrjA69RAcidGJ72tv+Z+SFKCN/Wap2VK+68BuX4ULrOA3oaXX2fdhTwnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5alBAeU; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748596811; c=relaxed/simple;
+	bh=wY2ASS0hqEnIKaScMD/+etk94cBxv6Usu1SN4mnFK0k=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=GOAOaRuLJHsCdo+lovMPgYhjb4Ord7sf06q8NvZrOQQ2DYt90YvnUKTqX/PXRZSEquHVYJsFswwCd3BfofUnDyY+9qlJDXUvbVcDcfqZiHM4vNXOGahXWxOMieubomu/h1ZwTa4cmSxuOXYfyrce8sIeYVRdC45jp2Mv2YexL0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unixarea.de; spf=pass smtp.mailfrom=unixarea.de; dkim=pass (2048-bit key) header.d=unixarea.de header.i=@unixarea.de header.b=ECBpbPL4; arc=none smtp.client-ip=178.254.4.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unixarea.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=unixarea.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5alBAeU"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43d0a5cfd7dso591855e9.1;
-        Fri, 14 Mar 2025 12:43:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741981383; x=1742586183; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1hu/zJ2jHGdBnKchkjhSGGREZ6UBkK9mReCjWBTN9G4=;
-        b=X5alBAeURrtSaRAtAj9nAw+6pC0x7kzXEK98reBL7cHO+1aUlVKY6i+TCNhneQ1Mc9
-         CBRVEAJcEjic8lzPWIrfpwGU9B8HWvH2Usv6v399tb4mbF5tirkUmh2rr0TVzn+982n4
-         dvIdFzHNQADmj2sZPJOhDAcipb7fUXv1rKvRx2RwvQXX0fIyCpqHuoGiS9+tO42it+3/
-         xYeVDXWZgL6Q9gXmC85+s04LMMcYKWWqY/fFBQXHNBO8+HAenOs+r3Uvv4m0p4wcDBcb
-         SG0TQJQrbwIXhqDgXSu+3BZc5IQe86oe/hdwjGuDPV0buTh2e1e1jrP4AGY97W/xree5
-         RaDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741981383; x=1742586183;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1hu/zJ2jHGdBnKchkjhSGGREZ6UBkK9mReCjWBTN9G4=;
-        b=Bzbkb0Rf5NdEJvOE6B8D7qbUKRZiIlVqo04LfgyMAEvlhNWF32RNxqMPjVYUakkTo7
-         ZcqNz4yY52AhzStkpVSXOh98JU1PTfM/srirWIHvTYQS+zqVbxWCXGJCyF4Igax3FI2f
-         LP5RyqozB/LVXdI9NZx9Rt0WtBKCb2J1JgN3Cmtspoh1WZ/sCVU0RdYCmHPijnoyRHb2
-         71pZUz+QXnwZMIPP3zOY5S8E9rdhmk6PQyNRqhpyNF6dPaEDBuUT3IRcUS0fK7rIVlNe
-         yWrlxo9pBL7tx/ZJDurt3ZWL6gOrcyxDgYXRTAmWbpehDGrG+rc69Fwrt5UyUvSOwi6+
-         jdWg==
-X-Forwarded-Encrypted: i=1; AJvYcCUm5TWNMwdyjLgQEZvWZSgvSmKwQfykCE0efxBFC4rezwrXF6rM1YLeVpfKUYXcreYXu7Wyt9pVL2lEjL7BDgbUUhXnuoI=@lists.linux.dev, AJvYcCXvXFO5cxKYArK7V0zSCtNCJzJqoN9cWlF+9eSuDTVjnPI5JlQc5ocGMpYi081G3uuBBO7gYNw+NkbQnAnk5Yc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxzCYokpOlaWB2GboiSiNXoLqg+a2OYMzF5loo5SlsHqhGmRtvl
-	iW6cHL2l1qRVvyrb2/xP4lbbzGn1Vv545VQnzbmbBhzEQ++A1Sc9hN0nF6ZP
-X-Gm-Gg: ASbGncuqwEdnRk4w1XycsPXIdGPRs1bZaEv67hO7m73gBAfu0en6HBZScl2k5yVVhuh
-	MAY8hTJmEKSP/EU/LjfXSOo6YpEXfcaGnLhYxRz39Vuk/5aR56yt+dz4+7KLYfY2/S7BwUOHDPI
-	lf2HtfF//o6TTg5Iz7hCroGqqgM2ghf8tyON/UgxawAGPPVdfJKedrxDDuiBSl24FLfpt5wLY+n
-	mbskFqk8Ars36RT5Ganjdku2kMXBPwSs891w8wF08h5aUX/cakb1vA88xjX0Bow9gt1nDOBR9ai
-	nxxz/LQGWAN7KaawoE6xizdLv5Rnd0+vE5Adk9ZmvKmjhGfUyJgiGAuT0n7JkhqUpi5xh+bui88
-	+dLBciG5YCEsnBdBuZCg=
-X-Google-Smtp-Source: AGHT+IEeIqRW6kF/AECWxyZR2vdYtkBLeMY5mDHuFk+9szvO4FmCmBeMvc1wZdHwXUyrDxCUqjLS7w==
-X-Received: by 2002:a05:600c:470e:b0:43c:ee62:33f5 with SMTP id 5b1f17b1804b1-43d1eccf8c6mr45245185e9.27.1741981383190;
-        Fri, 14 Mar 2025 12:43:03 -0700 (PDT)
-Received: from [192.168.68.113] (194-96-30-82.hdsl.highway.telekom.at. [194.96.30.82])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43d200fad4dsm26563245e9.29.2025.03.14.12.43.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Mar 2025 12:43:02 -0700 (PDT)
-Message-ID: <50c26c93-01e2-4a10-b878-070a6380c543@gmail.com>
-Date: Fri, 14 Mar 2025 20:43:01 +0100
+	dkim=pass (2048-bit key) header.d=unixarea.de header.i=@unixarea.de header.b="ECBpbPL4"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=unixarea.de
+	; s=blu3434000; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Reply-To:Message-ID:Subject:To:From:Date:Sender:Cc:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=y0DscpAnPH3+gHggPzSId1f6ePfIZy2Tpkiy7dFL/+Y=; b=ECBpbPL4x5xshbJmEGlTW63dgr
+	7IN9p2jacxfH++oC3kAhjbMRB9vClQWvM3zbmUr4eoWeYtrqqod6lZquPdST6/SSTNw1iqXFH32zl
+	goktCHYLVzl37eZAyxNzotOmVKaBeEGdVWQ1qW4iQjP07x9eKs7j0R7zXl3nmQ7GU6YM5Te/kNInO
+	QOya1C9Mqmxs4HSA4+en7gJBYMKhz3LiDpf1lE7ui8jjErlis7x9Y1HzrdAVGyALeU0+oWqj410Re
+	U67rG8mdrOnALFaBbRv9eJWcgXiSvIgg8qYMkJrpfcTCtVBqb1qnXoiPqwTuBT6VUPT+evW7X4cng
+	6HTaOg+w==;
+Received: from [212.222.85.178] (helo=pureos)
+	by ms-10.1blu.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <guru@unixarea.de>)
+	id 1uKvuA-008UTG-Ow
+	for printing-users@lists.linux.dev;
+	Fri, 30 May 2025 11:19:58 +0200
+Date: Fri, 30 May 2025 11:19:57 +0200
+From: Matthias Apitz <guru@unixarea.de>
+To: printing-users@lists.linux.dev
+Subject: Fwd: [cups] An issue with fonts in freefont-otf-20120503.tar.gz
+Message-ID: <aDl4PaS2pcJEqalO@pureos>
+Reply-To: Matthias Apitz <guru@unixarea.de>
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Introduction and Interest in Contributing to OpenPrinting for
- GSoC
-To: Abhivyakti Singh <abhivyaktis04@gmail.com>,
- printing-users@lists.linux.dev, printing-architecture@lists.linux.dev
-References: <CAHDAiUqbowc-zGu_E6jLrHya0UMpp_L4pmky42k2UX+QiDEXJg@mail.gmail.com>
-Content-Language: en-US
-From: Till Kamppeter <till.kamppeter@gmail.com>
-In-Reply-To: <CAHDAiUqbowc-zGu_E6jLrHya0UMpp_L4pmky42k2UX+QiDEXJg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+X-Operating-System: FreeBSD 14.0-CURRENT 1400094 (amd64)
+X-message-flag: Mails in HTML will not be read!  Send only plain text.
+X-Con-Id: 51246
+X-Con-U: 0-guru
 
-Hi, welcome to OpenPrinting!
+Hello,
 
-Perhaps you already went through some points of what I am asking you to do. 
-Please do what you did not have done yet.
+I'm a long term CUPS user, since CUPS 1.4.3, 2010, because we use CUPS
+to print UTF-8 text files out of a Library Management System, produced
+by the company I'm working for and installed at 100++ customer sites.
+The CUPS mailing list seems to be somewhat closed and I was directed to
+this list with my problem.
 
-To get deeper insight into OpenPrinting, have a look here:
+We're printing UTF-8 to PDF with a component 'texttopf' of CUPS 2.3.6, on
+Linux and a bit simplified the CUPS server issues a command like this for the
+UTF-8 files to print to PDF:
 
-https://wiki.linuxfoundation.org/gsoc/google-summer-code-2025-openprinting-projects#introduction
+CHARSET=utf-8 /usr/local/sisis-pap/cups2/lib/cups/filter/texttopdf 1 1 1 1 1  CUPS-UTF8.txt > /tmp/out.pdf
 
-This is the project idea list for this year's Google Summer of Code (which you 
-probably have already seen). It has an introduction about what we are doing, and 
-in the beginning links to several videos and podcasts with me. Especially watch 
-the Destination Linux video for a general introduction and the Indaba to learn 
-about the New Architecture, removal of PPD file and classic driver support in 
-CUPS 3.x.
+texttopdf is part of cups-filters-1.0.62 (in my case) and most of
+the language sets are printed fine, but the following India
+languages do not: 
 
-For an impression how our GSoC projects look like, see the contributor's 
-write-ups in my news posts and their final reports are linked in my October News:
+Bishnupriya Manipuri: ১৮শ বারো ১৯শ শতাব্দীর হমবুকে বিষ্ণুপ্র
 
-https://openprinting.github.io/OpenPrinting-News-October-2024/#google-summer-of-code-2024
+Bengali: সমস্ত মানুষ স্বাধীনভাবে সমান মর্যাদা এবং অধিকার নিয়ে জন্মগ্রহণ করে।
+তাঁদের বিবেক এবং বুদ্ধি আছে; সুতরাং সকলেরই একে অপরের প্রতি
+ভ্রাতৃত্বসুলভ মনোভাব নিয়ে আচরণ করা উচিৎ।
 
-All my news posts are here
+The resulting PDF file can be seen here:
+http://www.unixarea.de/freefont-otf-20120503-CUPS-UTF8.pdf
 
-https://openprinting.github.io/news/
+The problem originated from a very old GNU FreeFonts, from year 2010,
+and meanwhile I got access to the latest version from 2021,
+freefont-otf-20210506.tar.gz. The problem persists. I started digging
+into it and was told the Bengali is only supported in FreeSans, but not
+in FreeMono. But, texttopdf is unwilling to use FreeSans.
 
-So you get updates on what we are doing and what we have done.
+I simplified the test case to:
 
-In the project ideas list and in the news posts you find links to join our 
-Telegram group, mailing lists, and Mastodon.
+1)
+the UTF-8 file to print has only one line for Bengali
 
-Telegram OpenPrinting group: https://t.me/+RizBbjXz4uU2ZWM1
+2)
+the file which maps code points to fontnames has only the line for Bengali:
 
-Please have a look through the materials and tell us where you are most 
-interested in. Also feel free to ask questions, asking here in this chat or 
-using the other communication platforms of OpenPrinting.
+0980 09FF ltor single FreeSans FreeSans:bold FreeSans:oblique FreeSans:bold:oblique
 
-To familiarize with our code please try out the following
+3)
+I enabled the DEBUG statements in texttopdf.c
 
-1. Create a print queue in Linux (btr to take Ubuntu as the base system) and 
-print out of that.
-2. Download CUPS code, build it, add a comment in the code, and try to print and 
-capture the CUPS error log. Your comments should be visible in the CUPS error log.
-3. Go to Openprinting.Org and learn the basics.
-4. Learn about driverless print.
-5. Learn about print applications.
+It turns out on STDERR, that texttopdf.c knows from the file with the
+fontnames that it *should* use FreeSans, but at the end the function
+load_font() in texttopdf.c (attached) selects FreeMono:
 
-Once you are done with these basics, let me know and we can proceed from there.
+...
+DEBUG: line: "0980 09FF ltor single FreeSans FreeSans:bold FreeSans:oblique FreeSans:bold:oblique
+"
+DEBUG: num_fonts:0 lineptr: "FreeSans:bold FreeSans:oblique FreeSans:bold:oblique
+"
+DEBUG: font_load() entry: "FreeSans"
+DEBUG: font_load(): pattern: "^A"
+DEBUG: font_load() selected font /usr/share/fonts/FreeFont/FreeMono.otf
+DEBUG: num_fonts:0 lineptr: "FreeSans:oblique FreeSans:bold:oblique
+"
+DEBUG: k:0 valptr: "FreeSans:bold"
+DEBUG: font_load() entry: "FreeSans:bold"
+DEBUG: font_load(): pattern: "^B"
+DEBUG: font_load() selected font /usr/share/fonts/FreeFont/FreeMonoBold.otf
+...
 
-    Till
+I've no clue why font_load() selects the FreeMono.otf and not the
+FreeSans.otf.
+
+A comment in the source says:
+
+    /* In the list of fonts returned by FcFontSort()
+       find the first one that is both in TrueType format and monospaced */
+
+Maybe that's the reason...
 
 
+Thanks
 
-On 3/14/25 16:53, Abhivyakti Singh wrote:
-> Dear OpenPrinting Maintainers,
-> 
-> I’m Abhivyakti Singh, a first-year Computer Science student eager to
-> contribute to OpenPrinting as part of my preparation for Google Summer
-> of Code (GSoC) 2025.
-> 
-> My experience includes:
-> 
-> * C/C++ programming
-> * Web development
-> * Linux command-line tools
-> * Verilog for hardware design
-> * Exploring Linux kernel development
-> 
-> I'm particularly interested in learning more about OpenPrinting and
-> contributing to its development. If there are any beginner-friendly
-> issues or resources you recommend for newcomers, I would greatly
-> appreciate your guidance.
-> 
-> I’m excited to start learning and contributing. Looking forward to
-> your suggestions!
-> 
-> Best regards,
-> Abhivyakti Singh
-> 
-> GitHub: https://github.com/just-a-coder23
-> 
-> LinkedIn: https://www.linkedin.com/in/abhivyakti-singh-70a98231a/
-> 
+	matthias
 
+
+-- 
+Matthias Apitz, ✉ guru@unixarea.de, http://www.unixarea.de/ +49-176-38902045
+Public GnuPG key: http://www.unixarea.de/key.pub
