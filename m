@@ -1,140 +1,79 @@
-Received: from ms-10.1blu.de (ms-10.1blu.de [178.254.4.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from relay.wiredblade.com (relay.wiredblade.com [168.235.105.136])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4715521578F
-	for <printing-users@lists.linux.dev>; Fri, 30 May 2025 09:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.254.4.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB651E5B99
+	for <printing-users@lists.linux.dev>; Wed, 30 Jul 2025 06:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.235.105.136
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748596811; cv=none; b=eV/BSSPCF+G8k0j6kTmzufg17RG5tFh4JI3JjOX2rApf9iZ7qLRku82dPxLE6CvaS3xXk05pK4iS7Ep0t23mr3Afo9OYQfmCPPwqcd0EU4kCsKeknAzO1ApsyE19i9xIspNHDHSeBl695ItGvvrLguLBZEz0pNRkrTxjndKafvg=
+	t=1753856144; cv=none; b=dje9AlMn3PgHrYL3fApu9R696slJ0Mi306fFfImK6u3V2XGCTcRaWVznwgPPyr54xeyqhzc3TILCf32FYxWZCRvaLrqWe3YcVq9JxUi+58SWu7mmkONP3J+SwazRgLKUf61DHtMfOxSCaIJkQdAao6s93ES/bhNOzz/nhzZ8gjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748596811; c=relaxed/simple;
-	bh=wY2ASS0hqEnIKaScMD/+etk94cBxv6Usu1SN4mnFK0k=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=GOAOaRuLJHsCdo+lovMPgYhjb4Ord7sf06q8NvZrOQQ2DYt90YvnUKTqX/PXRZSEquHVYJsFswwCd3BfofUnDyY+9qlJDXUvbVcDcfqZiHM4vNXOGahXWxOMieubomu/h1ZwTa4cmSxuOXYfyrce8sIeYVRdC45jp2Mv2YexL0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unixarea.de; spf=pass smtp.mailfrom=unixarea.de; dkim=pass (2048-bit key) header.d=unixarea.de header.i=@unixarea.de header.b=ECBpbPL4; arc=none smtp.client-ip=178.254.4.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unixarea.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=unixarea.de
+	s=arc-20240116; t=1753856144; c=relaxed/simple;
+	bh=mbwhjXOZAzU7KSczFVXEMVEYi/lJ00kT337tUhA3sRw=;
+	h=Message-Id:To:Subject:From:Mime-Version:Content-Type:Date; b=CgN1g1pAJ00mYQe1SBPaKSAApqxKGErMXJKqRAJy+oUyBnKY/oiQ+PentSpTorkuyXs0OMpVxiDEeavlYv86E0n1b36YxzQVxcDQxXqsFk+0mowq9qYW7egG0dvp3dMWlwDfjCuCfBWkQ3An7K4+Q/Vv12KYEG00vR6DSczPiCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=compata.com; spf=none smtp.mailfrom=relay.compata.com; dkim=pass (2048-bit key) header.d=relay.compata.com header.i=@relay.compata.com header.b=tyiWKGBY; arc=none smtp.client-ip=168.235.105.136
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=compata.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=relay.compata.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=unixarea.de header.i=@unixarea.de header.b="ECBpbPL4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=unixarea.de
-	; s=blu3434000; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	Reply-To:Message-ID:Subject:To:From:Date:Sender:Cc:Content-ID:
-	Content-Description:In-Reply-To:References;
-	bh=y0DscpAnPH3+gHggPzSId1f6ePfIZy2Tpkiy7dFL/+Y=; b=ECBpbPL4x5xshbJmEGlTW63dgr
-	7IN9p2jacxfH++oC3kAhjbMRB9vClQWvM3zbmUr4eoWeYtrqqod6lZquPdST6/SSTNw1iqXFH32zl
-	goktCHYLVzl37eZAyxNzotOmVKaBeEGdVWQ1qW4iQjP07x9eKs7j0R7zXl3nmQ7GU6YM5Te/kNInO
-	QOya1C9Mqmxs4HSA4+en7gJBYMKhz3LiDpf1lE7ui8jjErlis7x9Y1HzrdAVGyALeU0+oWqj410Re
-	U67rG8mdrOnALFaBbRv9eJWcgXiSvIgg8qYMkJrpfcTCtVBqb1qnXoiPqwTuBT6VUPT+evW7X4cng
-	6HTaOg+w==;
-Received: from [212.222.85.178] (helo=pureos)
-	by ms-10.1blu.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <guru@unixarea.de>)
-	id 1uKvuA-008UTG-Ow
-	for printing-users@lists.linux.dev;
-	Fri, 30 May 2025 11:19:58 +0200
-Date: Fri, 30 May 2025 11:19:57 +0200
-From: Matthias Apitz <guru@unixarea.de>
+	dkim=pass (2048-bit key) header.d=relay.compata.com header.i=@relay.compata.com header.b="tyiWKGBY"
+dkim-signature: v=1; a=rsa-sha256; d=relay.compata.com; s=mail;
+	c=relaxed/relaxed; q=dns/txt; h=From:Subject:Date:Message-ID:To:MIME-Version:Content-Type;
+	bh=iD4/7tD6yk2KA6MkZtgM6NN3J5P5zntHcxSesOEO1SU=;
+	b=tyiWKGBYQ0J2Me4DkRsQcGCIjYx620giTxRb216ro9fR9PyJa+/zr08Lesn/PfU3H7ICESwAepf6tAPGQNFKbRt+/TR0S4AA2i1wmMlB0u+Q2k7pgITW8C4jmWzBgd9vUh2eaURct6QinqSEio8gHBv3Kgr6/hLr8M103jeaLQ+Fs2lQt2h/aCPO+ExLvyo+tzC/dxZXatWdrddsYQf4KbLlmxLS9j0biWzEhmnfa2qHJzM8G4RRy9JkFD
+	M4CpMY9rX8Ecb++/mrNFhNyQG7Te0PI7JyFm+06UaY8u5XAUasqtdA27MIcDfwfa7l7uoApiWJZRccx/uUGvv3CEJZ9g==
+Received: from compata.com (ip68-5-8-94.oc.oc.cox.net [68.5.8.94]) by relay.wiredblade.com
+ with ESMTPSA (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256)
+ ; Wed, 30 Jul 2025 06:15:41 +0000
+Received: from d9020.compata.com (d9020.compata.com [192.168.44.22]) by compata.com (8.18.1/8.18.1)
+ with ESMTP id 56U6FeqW1463015 for <printing-users@lists.linux.dev>; Tue,
+ 29 Jul 2025 23:15:40 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 compata.com 56U6FeqW1463015
+Received: from d9020.compata.com (localhost [127.0.0.1]) by d9020.compata.com (8.18.1/8.18.1)
+ with ESMTP id 56U6Feav3458581 for <printing-users@lists.linux.dev>; Tue,
+ 29 Jul 2025 23:15:40 -0700
+Message-Id: <202507300615.56U6Feav3458581@d9020.compata.com>
+X-Mailer: exmh version 2.9.0-6 2024-04-27 with nmh-1.8
 To: printing-users@lists.linux.dev
-Subject: Fwd: [cups] An issue with fonts in freefont-otf-20120503.tar.gz
-Message-ID: <aDl4PaS2pcJEqalO@pureos>
-Reply-To: Matthias Apitz <guru@unixarea.de>
+Subject: CUPS and IPP strangeness
+From: Dave Close <dave@compata.com>
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-Operating-System: FreeBSD 14.0-CURRENT 1400094 (amd64)
-X-message-flag: Mails in HTML will not be read!  Send only plain text.
-X-Con-Id: 51246
-X-Con-U: 0-guru
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Date: Tue, 29 Jul 2025 23:15:40 -0700
+X-Scanned-By: MIMEDefang 3.6 on 192.168.44.23
 
-Hello,
+I'm managing a small network with about a dozen printers. Some are
+unable to accept IPP and are configured to use JetDirect. All others
+are configured with IPP.
 
-I'm a long term CUPS user, since CUPS 1.4.3, 2010, because we use CUPS
-to print UTF-8 text files out of a Library Management System, produced
-by the company I'm working for and installed at 100++ customer sites.
-The CUPS mailing list seems to be somewhat closed and I was directed to
-this list with my problem.
+But one JetDirect printer in particular is having some strangeness.
+The /etc/cups/printers.conf file contains these lines.
 
-We're printing UTF-8 to PDF with a component 'texttopf' of CUPS 2.3.6, on
-Linux and a bit simplified the CUPS server issues a command like this for the
-UTF-8 files to print to PDF:
+  <Printer PF0>
+  Info HP p2055dn
+  DeviceURI socket://pf0
 
-CHARSET=utf-8 /usr/local/sisis-pap/cups2/lib/cups/filter/texttopdf 1 1 1 1 1  CUPS-UTF8.txt > /tmp/out.pdf
+But /var/log/cups/error_log contains lines like this one (wrapped here).
 
-texttopdf is part of cups-filters-1.0.62 (in my case) and most of
-the language sets are printed fine, but the following India
-languages do not: 
+  E [29/Jul/2025:22:03:18 -0700] Returning IPP client-error-bad-request
+  for Send-Document (ipp://localhost:631/printers/PF0) from localhost
 
-Bishnupriya Manipuri: ১৮শ বারো ১৯শ শতাব্দীর হমবুকে বিষ্ণুপ্র
+That sure look to me like CUPS is trying to send IPP traffic to this
+printer. That certainly won't work, port 631 is not open on this printer.
+I've restarted CUPS without effect. What can I do to fix this?
 
-Bengali: সমস্ত মানুষ স্বাধীনভাবে সমান মর্যাদা এবং অধিকার নিয়ে জন্মগ্রহণ করে।
-তাঁদের বিবেক এবং বুদ্ধি আছে; সুতরাং সকলেরই একে অপরের প্রতি
-ভ্রাতৃত্বসুলভ মনোভাব নিয়ে আচরণ করা উচিৎ।
-
-The resulting PDF file can be seen here:
-http://www.unixarea.de/freefont-otf-20120503-CUPS-UTF8.pdf
-
-The problem originated from a very old GNU FreeFonts, from year 2010,
-and meanwhile I got access to the latest version from 2021,
-freefont-otf-20210506.tar.gz. The problem persists. I started digging
-into it and was told the Bengali is only supported in FreeSans, but not
-in FreeMono. But, texttopdf is unwilling to use FreeSans.
-
-I simplified the test case to:
-
-1)
-the UTF-8 file to print has only one line for Bengali
-
-2)
-the file which maps code points to fontnames has only the line for Bengali:
-
-0980 09FF ltor single FreeSans FreeSans:bold FreeSans:oblique FreeSans:bold:oblique
-
-3)
-I enabled the DEBUG statements in texttopdf.c
-
-It turns out on STDERR, that texttopdf.c knows from the file with the
-fontnames that it *should* use FreeSans, but at the end the function
-load_font() in texttopdf.c (attached) selects FreeMono:
-
-...
-DEBUG: line: "0980 09FF ltor single FreeSans FreeSans:bold FreeSans:oblique FreeSans:bold:oblique
-"
-DEBUG: num_fonts:0 lineptr: "FreeSans:bold FreeSans:oblique FreeSans:bold:oblique
-"
-DEBUG: font_load() entry: "FreeSans"
-DEBUG: font_load(): pattern: "^A"
-DEBUG: font_load() selected font /usr/share/fonts/FreeFont/FreeMono.otf
-DEBUG: num_fonts:0 lineptr: "FreeSans:oblique FreeSans:bold:oblique
-"
-DEBUG: k:0 valptr: "FreeSans:bold"
-DEBUG: font_load() entry: "FreeSans:bold"
-DEBUG: font_load(): pattern: "^B"
-DEBUG: font_load() selected font /usr/share/fonts/FreeFont/FreeMonoBold.otf
-...
-
-I've no clue why font_load() selects the FreeMono.otf and not the
-FreeSans.otf.
-
-A comment in the source says:
-
-    /* In the list of fonts returned by FcFontSort()
-       find the first one that is both in TrueType format and monospaced */
-
-Maybe that's the reason...
-
-
-Thanks
-
-	matthias
-
-
+My major task on this network is to port it to a new system running a
+much more recent OS. At this time, CUPS is running on CentOS 6 and is
+version cups-1.4.2-81.el6_10.x86_64. I need to keep it running awhile
+longer.
 -- 
-Matthias Apitz, ✉ guru@unixarea.de, http://www.unixarea.de/ +49-176-38902045
-Public GnuPG key: http://www.unixarea.de/key.pub
+         Dave Close, Compata, Irvine CA       +1 714 434 7359
+       dave@compata.com              dhclose@alumni.caltech.edu
+  "One thing a person cannot do, no matter how rigorous his analysis
+   or heroic his imagination, is to draw up a list of things
+   that would never occur to him." -- Thomas Schelling
+
+
