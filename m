@@ -1,84 +1,82 @@
-Received: from mail.vordruckleitverlag.de (mail.vordruckleitverlag.de [136.243.178.225])
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2575A257ACF
-	for <printing-users@lists.linux.dev>; Wed, 20 Aug 2025 05:28:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.243.178.225
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD3C1E98EF
+	for <printing-users@lists.linux.dev>; Tue,  9 Dec 2025 01:47:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755667719; cv=none; b=vCtP0rp5bpiij2JaY2l+uXP1XT/PejD7Q1v/PscZjp3K7rmCSeYJo99ZECZozHZDY9V558ll5SpfwfrjuRpRHKWYLsjZyBZkU3Q9HrB35Sez/lDnz1Lcsf9x3qgbCCQeu0NriYGvkdAKKD8fUGaIINOFSbl9NwpWlosoAW2z4uA=
+	t=1765244848; cv=none; b=a2/1w+7iiWFQE50apeoFqzoPsNRPYGlMF5f1YBf+QyI9X1zFytSrQ3Pj1WQ2X/nSL+JMex118VMPtUrCKwcPu8skwlta8Zp4geODv+0D0I6DRjkOJgM8Zlli1DE0pKv/sB/+AdoDIouIQGvwPUDIXiiHnv2cT+CCq7X+8gsdgrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755667719; c=relaxed/simple;
-	bh=t4kIYQsQpWSe0lGgD2mGIhoCXQziyWjNTXbkNEPfEro=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=njm/9n5urgm94KXL0dDopp6V2wMNTNN52ZHsXoBXBFNZHqfk+HyiEDazeecNlib8DB7pLizFlmV0C/v3m4xCahfZeEEr83lllL9g97gOl6iwH1zm1E63LwijQZTuTMy07O8EODprC9Kf9P171H/K4QDbTkXBCgBFkRPVjY84+fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=vordruckleitverlag.de; spf=pass smtp.mailfrom=vordruckleitverlag.de; arc=none smtp.client-ip=136.243.178.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=vordruckleitverlag.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vordruckleitverlag.de
-Received: from [192.168.2.116] (p5097cf15.dip0.t-ipconnect.de [80.151.207.21])
-	by server1020.dmsolutionsonline.de (Mailservice) with ESMTPSA id E7B1CB18A5B1
-	for <printing-users@lists.linux.dev>; Wed, 20 Aug 2025 07:28:25 +0200 (CEST)
-Authentication-Results: server1020;
-        spf=pass (sender IP is 80.151.207.21) smtp.mailfrom=listen@vordruckleitverlag.de smtp.helo=[192.168.2.116]
-Received-SPF: pass (server1020: connection is authenticated)
-Message-ID: <70c45d50-4972-465b-bfa3-5ab1a69da3b5@vordruckleitverlag.de>
-Date: Wed, 20 Aug 2025 07:28:25 +0200
+	s=arc-20240116; t=1765244848; c=relaxed/simple;
+	bh=mn7/RGTbCSsZztQdpN7cnMUK+W8mXZW9sHM+SJStBHE=;
+	h=MIME-Version:Date:From:To:Subject:Message-ID:Content-Type; b=O5NW2bfM2/ykZQhADwawvRYgkMed4mcTv9Q+uUgG4O8TsACXE6cEjSA9xoBUFIolKQsOXar2H0nKfWBP1LfA+wKMP52LS2OmGmWmR36hhq8i+Pl0wWa0PFrCiVJ8AXth97JavQ1NyqSOksOYYzHt0vD6Hlf/c/+WLhRgFN7U7WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=I+hjqyQG; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="I+hjqyQG"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id EA0FC273A3
+	for <printing-users@lists.linux.dev>; Tue,  9 Dec 2025 02:47:24 +0100 (CET)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id yrwZs_A_lNPy for <printing-users@lists.linux.dev>;
+ Tue,  9 Dec 2025 02:47:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1765244843; bh=mn7/RGTbCSsZztQdpN7cnMUK+W8mXZW9sHM+SJStBHE=;
+	h=Date:From:To:Subject;
+	b=I+hjqyQGHwWyxWeo4XQTlK0jAXcCnNhMPJxov/JP/sYbCwQK10myFwGu09p6bht0B
+	 phTfEUgpYIfz0gpHpzidIVLy8IiC1mAxYJtna/XQzdqBUsh912G59kzNpM6X+TzzNW
+	 x6JMPTTwJQe0lbtojWdIb8auNdZpMptQh5ubFEezJN9sXkDv+Saw+9Rm+uNJXYAUTX
+	 lYcy4lIgiPloEDhyV/IJUYXhcMpAI3XKVFwnQ7EmirFL6VmxRcvVNEXb9okoH+DOxn
+	 itZeK/5C4qzYfawRJ7hHyi6G6pQ+wffWm7u9SJZd4wp8FjQIr/+KOIPx4ghfUiDdAF
+	 gNIjYgzE4xzUA==
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: How to relay driverless?
-Content-Language: de-DE
+Date: Mon, 08 Dec 2025 19:47:22 -0600
+From: jacobk <jacobk@disroot.org>
 To: printing-users@lists.linux.dev
-References: <4125cf30-dac1-4b44-9676-4d032aebb64b@nicemail.eu>
-From: =?UTF-8?B?SsO2cmcgVGjDvG1tbGVy?= <listen@vordruckleitverlag.de>
-In-Reply-To: <4125cf30-dac1-4b44-9676-4d032aebb64b@nicemail.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Canon ImageClass MF4770n not listed on Canon OpenPrinting list
+Message-ID: <983f9dd9392ab3edb0130c8b90af33a6@disroot.org>
+X-Sender: jacobk@disroot.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: 
- <175566770614.3194.14560564687612170280@server1020.dmsolutionsonline.de>
-X-PPP-Vhost: vordruckleitverlag.de
-X-Virus-Scanned: clamav-milter 0.103.9 at server1020
-X-Virus-Status: Clean
 
-Am 19.08.25 um 18:20 schrieb schnabeltasse@nicemail.eu:
-> Can you help me with that?
-> 
-> 
-> I have a printer that is driverless-capable.
-> It is added to a cups on my server via driverless. Printing with that works.
-> Now I share these printers with CUPS and avahi to an adjacent network. Not directly.
-> How do I make autodiscovery on clients in the adjacent network work so that they too can automatically choose driverless and stuff works?
-> 
-> Same explanation in simpler statements to avoid confusion in long sentences:
-> 
-> (Internalnet{clients, printer, serveriface1},10.1.1.0/24)--(Server{<-avahitointernal,avahitoguestnet->})--(guestnet{randomhosts}10.2.2.0/24)
-> 
-> No routing between internal and guest.
-> 
-> Clients will discover shared printers from server.
-> They will be able to add them and choose driverless.
-> Or even add them automatically with cups-browsed.
-> They print to that shared printer on the cups.
-> And the cups brings the printjob to the specified printer in the other network.
-> Via ipp everywhere driverless.
-> 
-> The part from cups host to printer works.
-> The part from guests to cups to printer doesn't work.
-> 
-> 
-> + Schnabeltasse +
-> 
+Hello,
 
-Hi,
+I have access to a Canon ImageClass MF4770n printer, and I wanted to 
+print to it from Trisquel. Canon provides a Linux driver [1], but I 
+don't want to use it because it's proprietary, and the license might 
+preclude my use case anyway (use in a business). Maybe I am reading the 
+license too strictly, but I would like to avoid it anyway.
 
-AFAIK "Browsing On" has to be set in the cups conf and maybe the 
-"BrowseLocalProtocols" too ("dnssd" here) and you should make sure, that 
-the client can reach the server via https://<server>:631...
+I looked at a list on openprinting.org [2] and didn't see this model 
+mentioned as working or non-working, so my understanding is that this is 
+a printer that hasn't been investigated much yet.
 
--- 
-cu
+The ppd files included with the Canon driver package are released under 
+a free license, but they depend on a nonfree filter program called 
+"rastertoufr2", presumably to convert raster input to UFR II output. I 
+found a different repository with a filter to convert PostScript to UFR 
+II [3], and a different program to convert raster to PostScript [4].
 
-jth
+Would I be correct to think those programs could be combined to build a 
+fully-free printer driver for this model, or am I missing something 
+important?
+
+I also made a similar post on the Trisquel forums [5].
+
+  - Jacob K
+
+[1] https://in.canon/en/support/0100924010?model=imageCLASS+MF4770n
+[2] https://openprinting.org/printers/manufacturer/Canon
+[3] https://github.com/vicamo/cndrvcups-lb
+[4] https://github.com/pts/sam2p
+[5] 
+https://trisquel.info/en/forum/canon-imageclass-mf4770n-will-not-work-without-proprietary-software-it-seems
