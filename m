@@ -1,126 +1,299 @@
-Received: from mail.vordruckleitverlag.de (mail.vordruckleitverlag.de [136.243.178.225])
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647F713774D
-	for <printing-users@lists.linux.dev>; Tue,  9 Dec 2025 10:20:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.243.178.225
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD48285C99
+	for <printing-users@lists.linux.dev>; Tue,  9 Dec 2025 20:29:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765275649; cv=none; b=RoBrSmbzUbl64l/DbbvaD4BhgWQRM3GgQwGnD9ZH81+5UgUduwBRjvyGbqxVNdaz+ROs5yCpfkT6lfGCyfiW3IH4A3qM5cWrN/G/1NMsNJkxiwzFLQigCx7WMlKfwX32zq/OUAws+bdyE6tUuw+sPWJhTlWMjeOmcsGtDoHSryg=
+	t=1765312177; cv=none; b=C7fLh4dqiTfGl5WRV5GYa3NOkHUpc7qFroc5lF2QUOMPyBzLQQZ+1nJ+tJtkoyWoRLEqmuKmYO7/WCa8Ov+jtUxji0Y/nNc3F5aglAlQSS6Fd/QHuz0hSyjaDrvG1V//81HZZ6H/8bvHF3jCx7M+3+pqnwB7Lw94rN866zCtcgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765275649; c=relaxed/simple;
-	bh=sEY8yPHwAqJEVvLKNv/yqkxrByeXQbzx74SvjyOH5Sg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=g8E9LLBhzknaXWoMfK1fkovZNAdHgOSlFHlcGY10odAvx+4nyGfZ12/zPHhYeSSNvWeQrnCDn39kNmmoImd+djo4T8KUSm+fLir9+Ql3/bphjUvtxEoL+9KmQVTkLn8lzCaGtSn5sPE+KH9DSgJzoiQkdvn46VsXqwf8vXB65p4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vordruckleitverlag.de; spf=pass smtp.mailfrom=vordruckleitverlag.de; dkim=pass (2048-bit key) header.d=vordruckleitverlag.de header.i=@vordruckleitverlag.de header.b=is53yof7; arc=none smtp.client-ip=136.243.178.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vordruckleitverlag.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vordruckleitverlag.de
+	s=arc-20240116; t=1765312177; c=relaxed/simple;
+	bh=PnbpT2JSXloUQXsDbmp3Wng7BmGZDSeyAegiMfbUROQ=;
+	h=Message-ID:Date:MIME-Version:To:References:From:Subject:
+	 In-Reply-To:Content-Type; b=BWjdHaE94K2sTNv1KKUuuNW5lT3Qcv3WpgQqprgpHpdK3hy9qvN6yF5AMdUefG2Atur10tUOpmU/KGrpo2y7jE364tul3V5SBCrCIQezpG9n7ouxxcP1nbngi8pttUmk2CbmrOQzBlgxQmI6rJrzVOGudB/9ZKffpPa/7Z6+q+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=fCXYndrZ; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vordruckleitverlag.de header.i=@vordruckleitverlag.de header.b="is53yof7"
-Received: from [192.168.2.116] (p5097cf15.dip0.t-ipconnect.de [80.151.207.21])
-	by server1020.dmsolutionsonline.de (Mailservice) with ESMTPSA id 0194FB182C8F
-	for <printing-users@lists.linux.dev>; Tue,  9 Dec 2025 11:10:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=vordruckleitverlag.de; s=dmplsk; t=1765275050;
-	bh=FFsAvczGHWXsr1nzwHoDnNZK7wye6kRYERJA2lPNF08=; h=Subject:To:From;
-	b=is53yof7ildMNX9Wm6prKfiuz3VgRyofozM6XyCLOYwuhHJsONSRhTuqaoasJxPac
-	 n7z1n8sAWJNdmM66b3Xz13ryqXtayltg41uBtHC4IEdpJJ3SYTUFZfpWoDoCCf8CDV
-	 1OSjSyUHG2kjakINg860rkPvw4/S/5jQSh7CvZaHlg7iOQF+QV5B6KQiwM3OlQ0D1h
-	 4Pvy7ERchMLrUVcBePLXO1EhBGLZo6oUu/jpWFY7+MmfbClTEPzoYIkge0wGE+agzR
-	 BJwf1Jmez+h4h/bTl1SV6ech/gWwDlKK5Lclq1oDcMpBaSfbAJCcCdJRSkSf1ymQmY
-	 DCvQE1OruS/yQ==
-Authentication-Results: server1020;
-        spf=pass (sender IP is 80.151.207.21) smtp.mailfrom=listen@vordruckleitverlag.de smtp.helo=[192.168.2.116]
-Received-SPF: pass (server1020: connection is authenticated)
-Message-ID: <5af2f7fb-00a3-44b4-a2a0-b1dab47e2de8@vordruckleitverlag.de>
-Date: Tue, 9 Dec 2025 11:10:49 +0100
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="fCXYndrZ"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id EC452274E6
+	for <printing-users@lists.linux.dev>; Tue,  9 Dec 2025 21:29:24 +0100 (CET)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id GqL7hILkn4bD for <printing-users@lists.linux.dev>;
+ Tue,  9 Dec 2025 21:29:24 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1765312164; bh=PnbpT2JSXloUQXsDbmp3Wng7BmGZDSeyAegiMfbUROQ=;
+	h=Date:To:References:From:Subject:In-Reply-To;
+	b=fCXYndrZAE2EsOWuoB3NrOCHqHu1DjeAhLzJ7VzBeJlRRz//nDcKlxDSmvmtJWsgu
+	 9WCCWVf2I3PyR6jlef/4231Q25aSkC5srGiflld4/nOBXGvJdvnqB3FDPQ1QVryOP7
+	 X3oK11cQBDsimsqOu5mLVBnUWUMNZCvRQtU39OyqEQT+6Oe03NvLVpRSb2ZnsSaogc
+	 tcTdjG+Yz0IeyInrvOEq5CWPZ9cWtDPP/stiy4BR825BiC4/KOzTlo4plbxNbEelOW
+	 K3TZlzXpfOkgCEumFKKlVAuYlPu2/So0R+1yJkypJG+Fk2ugeutxj5x/u/m2V+NN3G
+	 Vt5GN1STeu13A==
+Message-ID: <975e91b5-d77f-48e4-a31c-8fa7f8ca6bb8@disroot.org>
+Date: Tue, 9 Dec 2025 14:29:21 -0600
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
 List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Canon ImageClass MF4770n not listed on Canon OpenPrinting list
-Content-Language: de-DE
+User-Agent: Icedove Mail
 To: printing-users@lists.linux.dev
 References: <983f9dd9392ab3edb0130c8b90af33a6@disroot.org>
-From: =?UTF-8?B?SsO2cmcgVGjDvG1tbGVy?= <listen@vordruckleitverlag.de>
-In-Reply-To: <983f9dd9392ab3edb0130c8b90af33a6@disroot.org>
+ <5af2f7fb-00a3-44b4-a2a0-b1dab47e2de8@vordruckleitverlag.de>
+Content-Language: en-US
+From: Jacob K <jacobk@disroot.org>
+Autocrypt: addr=jacobk@disroot.org; keydata=
+ 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
+Subject: Re: Canon ImageClass MF4770n not listed on Canon OpenPrinting list
+In-Reply-To: <5af2f7fb-00a3-44b4-a2a0-b1dab47e2de8@vordruckleitverlag.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------yWfsOCT8pSdampjq4A51VQUb"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------yWfsOCT8pSdampjq4A51VQUb
+Content-Type: multipart/mixed; boundary="------------GcgM4PSGE1qZIe0X40AZhpIO";
+ protected-headers="v1"
+From: Jacob K <jacobk@disroot.org>
+To: printing-users@lists.linux.dev
+Message-ID: <975e91b5-d77f-48e4-a31c-8fa7f8ca6bb8@disroot.org>
+Subject: Re: Canon ImageClass MF4770n not listed on Canon OpenPrinting list
+References: <983f9dd9392ab3edb0130c8b90af33a6@disroot.org>
+ <5af2f7fb-00a3-44b4-a2a0-b1dab47e2de8@vordruckleitverlag.de>
+In-Reply-To: <5af2f7fb-00a3-44b4-a2a0-b1dab47e2de8@vordruckleitverlag.de>
+
+--------------GcgM4PSGE1qZIe0X40AZhpIO
+Content-Type: multipart/mixed; boundary="------------RSsrSy1uR0wB5Z7I7pAfwChL"
+
+--------------RSsrSy1uR0wB5Z7I7pAfwChL
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: 
- <176527505019.5898.1162086505687063291@server1020.dmsolutionsonline.de>
-X-PPP-Vhost: vordruckleitverlag.de
-X-Virus-Scanned: clamav-milter 0.103.9 at server1020
-X-Virus-Status: Clean
+Content-Transfer-Encoding: base64
 
-Am 09.12.25 um 02:47 schrieb jacobk:
-> Hello,
-> 
-> I have access to a Canon ImageClass MF4770n printer, and I wanted to 
-> print to it from Trisquel. Canon provides a Linux driver [1], but I 
-> don't want to use it because it's proprietary, and the license might 
-> preclude my use case anyway (use in a business). Maybe I am reading the 
-> license too strictly, but I would like to avoid it anyway.
-> 
-> I looked at a list on openprinting.org [2] and didn't see this model 
-> mentioned as working or non-working, so my understanding is that this is 
-> a printer that hasn't been investigated much yet.
-> 
-> The ppd files included with the Canon driver package are released under 
-> a free license, but they depend on a nonfree filter program called 
-> "rastertoufr2", presumably to convert raster input to UFR II output. I 
-> found a different repository with a filter to convert PostScript to UFR 
-> II [3], and a different program to convert raster to PostScript [4].
-> 
-> Would I be correct to think those programs could be combined to build a 
-> fully-free printer driver for this model, or am I missing something 
-> important?
-> 
-> I also made a similar post on the Trisquel forums [5].
-> 
->   - Jacob K
-> 
-> [1] https://in.canon/en/support/0100924010?model=imageCLASS+MF4770n
-> [2] https://openprinting.org/printers/manufacturer/Canon
-> [3] https://github.com/vicamo/cndrvcups-lb
-> [4] https://github.com/pts/sam2p
-> [5] https://trisquel.info/en/forum/canon-imageclass-mf4770n-will-not- 
-> work-without-proprietary-software-it-seems
-> 
+T24gMTIvOS8yNSAwNDoxMCwgSsO2cmcgVGjDvG1tbGVyIHdyb3RlOg0KPiBBbSAwOS4xMi4y
+NSB1bSAwMjo0NyBzY2hyaWViIGphY29iazoNCj4+IEhlbGxvLA0KPj4NCj4+IEkgaGF2ZSBh
+Y2Nlc3MgdG8gYSBDYW5vbiBJbWFnZUNsYXNzIE1GNDc3MG4gcHJpbnRlciwgYW5kIEkgd2Fu
+dGVkIHRvIA0KPj4gcHJpbnQgdG8gaXQgZnJvbSBUcmlzcXVlbC4gQ2Fub24gcHJvdmlkZXMg
+YSBMaW51eCBkcml2ZXIgWzFdLCBidXQgSSANCj4+IGRvbid0IHdhbnQgdG8gdXNlIGl0IGJl
+Y2F1c2UgaXQncyBwcm9wcmlldGFyeSwgYW5kIHRoZSBsaWNlbnNlIG1pZ2h0IA0KPj4gcHJl
+Y2x1ZGUgbXkgdXNlIGNhc2UgYW55d2F5ICh1c2UgaW4gYSBidXNpbmVzcykuIE1heWJlIEkg
+YW0gcmVhZGluZyANCj4+IHRoZSBsaWNlbnNlIHRvbyBzdHJpY3RseSwgYnV0IEkgd291bGQg
+bGlrZSB0byBhdm9pZCBpdCBhbnl3YXkuDQo+Pg0KPj4gSSBsb29rZWQgYXQgYSBsaXN0IG9u
+IG9wZW5wcmludGluZy5vcmcgWzJdIGFuZCBkaWRuJ3Qgc2VlIHRoaXMgbW9kZWwgDQo+PiBt
+ZW50aW9uZWQgYXMgd29ya2luZyBvciBub24td29ya2luZywgc28gbXkgdW5kZXJzdGFuZGlu
+ZyBpcyB0aGF0IHRoaXMgDQo+PiBpcyBhIHByaW50ZXIgdGhhdCBoYXNuJ3QgYmVlbiBpbnZl
+c3RpZ2F0ZWQgbXVjaCB5ZXQuDQo+Pg0KPj4gVGhlIHBwZCBmaWxlcyBpbmNsdWRlZCB3aXRo
+IHRoZSBDYW5vbiBkcml2ZXIgcGFja2FnZSBhcmUgcmVsZWFzZWQgDQo+PiB1bmRlciBhIGZy
+ZWUgbGljZW5zZSwgYnV0IHRoZXkgZGVwZW5kIG9uIGEgbm9uZnJlZSBmaWx0ZXIgcHJvZ3Jh
+bSANCj4+IGNhbGxlZCAicmFzdGVydG91ZnIyIiwgcHJlc3VtYWJseSB0byBjb252ZXJ0IHJh
+c3RlciBpbnB1dCB0byBVRlIgSUkgDQo+PiBvdXRwdXQuIEkgZm91bmQgYSBkaWZmZXJlbnQg
+cmVwb3NpdG9yeSB3aXRoIGEgZmlsdGVyIHRvIGNvbnZlcnQgDQo+PiBQb3N0U2NyaXB0IHRv
+IFVGUiBJSSBbM10sIGFuZCBhIGRpZmZlcmVudCBwcm9ncmFtIHRvIGNvbnZlcnQgcmFzdGVy
+IHRvIA0KPj4gUG9zdFNjcmlwdCBbNF0uDQo+Pg0KPj4gV291bGQgSSBiZSBjb3JyZWN0IHRv
+IHRoaW5rIHRob3NlIHByb2dyYW1zIGNvdWxkIGJlIGNvbWJpbmVkIHRvIGJ1aWxkIA0KPj4g
+YSBmdWxseS1mcmVlIHByaW50ZXIgZHJpdmVyIGZvciB0aGlzIG1vZGVsLCBvciBhbSBJIG1p
+c3Npbmcgc29tZXRoaW5nIA0KPj4gaW1wb3J0YW50Pw0KPj4NCj4+IEkgYWxzbyBtYWRlIGEg
+c2ltaWxhciBwb3N0IG9uIHRoZSBUcmlzcXVlbCBmb3J1bXMgWzVdLg0KPj4NCj4+IMKgwqAt
+IEphY29iIEsNCj4+DQo+PiBbMV0gaHR0cHM6Ly9pbi5jYW5vbi9lbi9zdXBwb3J0LzAxMDA5
+MjQwMTA/bW9kZWw9aW1hZ2VDTEFTUytNRjQ3NzBuDQo+PiBbMl0gaHR0cHM6Ly9vcGVucHJp
+bnRpbmcub3JnL3ByaW50ZXJzL21hbnVmYWN0dXJlci9DYW5vbg0KPj4gWzNdIGh0dHBzOi8v
+Z2l0aHViLmNvbS92aWNhbW8vY25kcnZjdXBzLWxiDQo+PiBbNF0gaHR0cHM6Ly9naXRodWIu
+Y29tL3B0cy9zYW0ycA0KPj4gWzVdIGh0dHBzOi8vdHJpc3F1ZWwuaW5mby9lbi9mb3J1bS9j
+YW5vbi1pbWFnZWNsYXNzLW1mNDc3MG4td2lsbC1ub3QtIA0KPj4gd29yay13aXRob3V0LXBy
+b3ByaWV0YXJ5LXNvZnR3YXJlLWl0LXNlZW1zDQo+Pg0KPiANCj4gSGksDQo+IA0KPiByZWFk
+aW5nIHRoZSBsaWNlbnNlIEknbSBzdXJlLCBjb21tZXJjaWFsIHVzZSBpcyBhbGxvd2VkIC0g
+aWYgeW91ciANCj4gYnVzaW5lc3MgaXMgbGVnYWwgOy0pDQo+IA0KPiBsb29raW5nIGludG8g
+dGhlIGdpdCBzb3VyY2VzIFszXSBJJ20gc3VyZSB0aGV5J3JlIHVuZGVyIHRoZSBzYW1lIA0K
+PiByZXN0cmljdGlvbnMgYXMgSSBmb3VuZCB0aGVyZToNCj4gDQo+IGh0dHBzOi8vZ2l0aHVi
+LmNvbS92aWNhbW8vY25kcnZjdXBzLWxiL2Jsb2IvbWFzdGVyL0xJQ0VOU0UtdWZyMi0yLjQw
+RS50eHQ6DQo+IA0KPiBbMV0gU09GVFdBUkUgTElDRU5TRSBBR1JFRU1FTlQgRk9SIENBTk9O
+J1MgT1IgSVRTIExJQ0VOU09SUycgU09GVFdBUkUgDQo+IFBST0dSQU1TDQo+IA0KPiBJTVBP
+UlRBTlQNCj4gDQo+IFRoaXMgaXMgYSBsZWdhbCBhZ3JlZW1lbnQgKCJBZ3JlZW1lbnQiKSBi
+ZXR3ZWVuIHlvdSBhbmQgQ2Fub24gSW5jLiANCj4gKCJDYW5vbiIpwqAgZ292ZXJuaW5nIHlv
+dXIgdXNlIG9mIENhbm9uJ3Mgb3IgaXRzIGxpY2Vuc29ycycgc29mdHdhcmUgDQo+IHByb2dy
+YW1zIGluY29ycG9yYXRlZCBpbiB0aGlzIENhbm9uJ3MgcHJvZHVjdCAiQ2Fub24gVUZSIElJ
+L1VGUiBJSSBMVCANCj4gUHJpbnRlciBEcml2ZXIgZm9yIExpbnV4IHYyLjQwICIgKCJQcm9k
+dWN0IiksIGFuZCB3aGljaCBzb2Z0d2FyZSANCj4gcHJvZ3JhbXMgYXJlIGxpc3RlZCBpbiBT
+Y2hlZHVsZSAxIG9mIEV4aGliaXQgYXR0YWNoZWQgaGVyZXRvLsKgIFN1Y2ggDQo+IENhbm9u
+J3Mgb3IgaXRzIGxpY2Vuc29ycycgc29mdHdhcmUgcHJvZ3JhbXMgc2hhbGwgYmUNCj4gcmVm
+ZXJyZWQgdG8gaGVyZWluYWZ0ZXIgYXMgdGhlICJTb2Z0d2FyZS4iDQo+IC4uLg0KPiANCj4g
+c28gSU1ITyBhIGRyaXZlciBidWlsdCBieSB0aGlzIHdvdWxkIGJlICJ0YWludGVkIiBhcyB3
+ZWxsLi4uDQo+IA0KPiBJIHRoaW5rLCBhbGwgdWZyIHN0dWZmIGlzIGEgInNlY3JldCIgb2Yg
+Q2Fub24gYW5kIGJlY2F1c2Ugb2YgdGhlIGxpbnV4IA0KPiBkcml2ZXJzIHlvdSBjYW4gZ2V0
+IG5vIG9uZSBoYWQgYSBiaWcgaW50ZXJlc3Qgb24gImJyZWFraW5nIiBpdC4gDQo+IEVzcGFj
+aWFsbHkgYXMgQ2Fub24gcHJpbnRlcnMgYXJlIG5vdCB0aGF0IHdpZGUgc3ByZWFkIGluIHRo
+ZSBkZXNrdG9wIA0KPiBjb21wdXRlciB3b3JsZC4uLg0KPiANCg0KVGhhbmtzIGZvciB0aGUg
+cmVwbHkuDQoNCkkgZ3Vlc3MgdGhlIHF1ZXN0aW9uIG9mIHdoZXRoZXIgaXQgaXMgbGVnYWwg
+dG8gdXNlIGluIG15IGNhc2UgZGVwZW5kcyBvbiANCnRoZSBkZWZpbml0aW9uIG9mICJwZXJz
+b25hbCB1c2UiLiBJIHNob3VsZCBub3RlIHRoYXQgdGhlIGJ1c2luZXNzIA0KaW52b2x2ZXMg
+bWFueSBwZW9wbGUsIGJ1dCBtYXliZSBJIGFtIGNvbXBsZXRlbHkgbWlzdW5kZXJzdGFuZGlu
+ZyB0aGUgDQoicGVyc29uYWwgdXNlIiBtZWFuaW5nLg0KDQpJdCdzIHN0cmFuZ2UgdGhhdCB0
+aGUgbGljZW5zZSBvbiB0aGUgQ2Fub24gd2Vic2l0ZSBbMV0gZG9lc24ndCBzZWVtIHRvIA0K
+ZXhwbGljaXRseSBtZW50aW9uICJjb21tZXJjaWFsIiB1c2Ugb2YgdGhlIHByaW50aW5nIHNv
+ZnR3YXJlLCBidXQgdGhlIA0KZGlzY2xhaW1lciBhdCB0aGUgdmVyeSBib3R0b20gZG9lcy4g
+SXQgc2F5cyAiWW91IG1heSBkb3dubG9hZCBhbmQgdXNlIA0KdGhlIENvbnRlbnQgc29sZWx5
+IGZvciB5b3VyIHBlcnNvbmFsLCBub24tY29tbWVyY2lhbCB1c2UgYW5kIGF0IHlvdXIgb3du
+IA0Kcmlza3MuIi4gVGhhdCBxdW90ZSBpcyBub3QgcGFydCBvZiB0aGUgbGljZW5zZSBpdHNl
+bGYsIHNvIG1heWJlIGl0IA0KZG9lc24ndCByZWFsbHkgbWF0dGVyPw0KDQpUaGUgbGljZW5z
+ZSB5b3UgbGlua2VkIFs2XSBpcyBub25mcmVlLCBidXQgdGhlIG5vbmZyZWUgcGFydCBvbmx5
+IGFwcGxpZXMgDQp0byB0aGUgU2NoZWR1bGUgMSBpdGVtcy4gcHN0b3VmcjJjcGNhIGlzIGxp
+c3RlZCB1bmRlciBTY2hlZHVsZSAyLCB3aGljaCANCmlzIGNvdmVyZWQgYnkgR1BMLTIuMC1v
+bmx5IGluc3RlYWQuIEkgYmVsaWV2ZSBwc3RvdWZyMmNwY2EgaXMgdGhlIA0KcHJvZ3JhbSB3
+aGljaCBjb252ZXJ0cyBmcm9tIFBvc3RTY3JpcHQgdG8gVUZSIElJLiBUaG91Z2gsIG1heWJl
+IGl0IGRvZXMgDQpkZXBlbmQgb24gc29tZXRoaW5nIGZyb20gU2NoZWR1bGUgMS4NCg0KWzZd
+IA0KaHR0cHM6Ly9naXRodWIuY29tL3ZpY2Ftby9jbmRydmN1cHMtbGIvYmxvYi9tYXN0ZXIv
+TElDRU5TRS11ZnIyLTIuNDBFLnR4dA0K
+--------------RSsrSy1uR0wB5Z7I7pAfwChL
+Content-Type: application/pgp-keys; name="OpenPGP_0x8EF548378E806320.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x8EF548378E806320.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-reading the license I'm sure, commercial use is allowed - if your 
-business is legal ;-)
+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
+NBaG6k8emEvf5pIq
+=3DcYbw
+-----END PGP PUBLIC KEY BLOCK-----
 
-looking into the git sources [3] I'm sure they're under the same 
-restrictions as I found there:
+--------------RSsrSy1uR0wB5Z7I7pAfwChL--
 
-https://github.com/vicamo/cndrvcups-lb/blob/master/LICENSE-ufr2-2.40E.txt:
+--------------GcgM4PSGE1qZIe0X40AZhpIO--
 
-[1] SOFTWARE LICENSE AGREEMENT FOR CANON'S OR ITS LICENSORS' SOFTWARE 
-PROGRAMS
+--------------yWfsOCT8pSdampjq4A51VQUb
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-IMPORTANT
+-----BEGIN PGP SIGNATURE-----
 
-This is a legal agreement ("Agreement") between you and Canon Inc. 
-("Canon")  governing your use of Canon's or its licensors' software 
-programs incorporated in this Canon's product "Canon UFR II/UFR II LT 
-Printer Driver for Linux v2.40 " ("Product"), and which software 
-programs are listed in Schedule 1 of Exhibit attached hereto.  Such 
-Canon's or its licensors' software programs shall be
-referred to hereinafter as the "Software."
-...
+wsF5BAABCAAjFiEEaPOMdG0CIMkKcHBTjvVIN46AYyAFAmk4hqEFAwAAAAAACgkQjvVIN46AYyBS
+TRAAo5b//D5yrcwAvfi7RW2YGzAmRdtFH5MxliIZ42donjagArQds0cHEjCMtXXKHo3zUouYkMGg
+maSyHBDCy1K3qPEDxMb3qFRn9/4W6LO+kkxEV1+BLKh2inq5LKvAukmijNauSsTexRRhgLsowta6
+HWyo70gHe+xTsEsUxZ18q3FGyQrZ0w9EYBfTFg3p+qwmAnjnOSFR7lRP7y3kB4GfBFu9bu47kH9s
+EHRA+cKDCvm80TCLt7GSSl6SWEPNCS2P20a+QUV7d6YDeoaExsAHlvttOu6zSzddFodhfXUoGoWF
+kuGbBXCqkjCZ15V8nSR0IL2byzvccDlbZ0tUHdHSuqG+DrHNFkPeZoZLncMUCFYNWY7ZJLkWTlC/
+aCY+zomRe0sAHkgkKzju4YYpWa6DlupX70+JcvQBmMpReyIKqC7zeJmB73lGwpa5YcbdAFQEJwyV
+8AVvKd01/FB8ovoD06Btpg7aZqW4pAMsKeR7MDxhii0fDWc/l085p2iqSPlUgaq/EUz1L64Up5J1
+HgOhQPhpF8U3yyXFdl0RaLGshxzDEmaGVGg7THD790TgZWcYKnHrqP8BYk8D9/0Y8YfOeWjuVhad
+8QOXtu/aYmDjnP0+6tfGLPqXDsePHpiSSMQTnImHf6W/c01a2x8okH/RUrs5EAUZBvC8afwV9eSC
+s6U=
+=GhkU
+-----END PGP SIGNATURE-----
 
-so IMHO a driver built by this would be "tainted" as well...
-
-I think, all ufr stuff is a "secret" of Canon and because of the linux 
-drivers you can get no one had a big interest on "breaking" it. 
-Espacially as Canon printers are not that wide spread in the desktop 
-computer world...
-
--- 
-cu
-
-jth
+--------------yWfsOCT8pSdampjq4A51VQUb--
