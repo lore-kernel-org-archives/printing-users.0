@@ -1,66 +1,42 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from filter.openoffice.nl (filter.openoffice.nl [144.76.204.185])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A3237BE87
-	for <printing-users@lists.linux.dev>; Wed, 14 Jan 2026 08:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876721F91E3
+	for <printing-users@lists.linux.dev>; Thu, 19 Mar 2026 13:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.204.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768378697; cv=none; b=OuXKyEhB65kOiXPdaF2HNVd+D30t5TBbSN/GTGP3D4jYxhsX9MtRQ7EooVHCly9F/uOeo4EwXPrSMmV3XiwLY0KPasyfo/Vt9ppDRJTtjMrARIxPAKiIKZC1oCHx6yPZ8BKTD6Q9wuqHuw8WHnTWIZayu9PktUTGQQ3cYFJQzt8=
+	t=1773927338; cv=none; b=VZdboq4tPXyOLe/H0l6e2wn36kl/tHj3pT770O2HlpUNtP0kQUpI+oniCJrtIaLq49ayVsKRVeqZCrdWb4or92sSf7qfX/x7tkGOD6K25et75P9O3stxYe+vxqHZ0YLIugD5r7o9x8Iym7nA1YO71Xv4rzKnAQmcWgUdTT7eoyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768378697; c=relaxed/simple;
-	bh=MTEolYJEuTWNKn6jZaPh2PE4zMpDBTpQ28w+xW8mfTQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=WwaTPGqSkwc3bGjAf4/wiLraixfg+uKWhuJ04qn0x96P9CIx22czF0Gvnvz4TibP6/a0KA5Lq7Gznr3KyTNp0EaBrByAgLa2w4ai6D+TDNFJIW+vXTYVCV6z6D2LnyFMOOuIgEkp4Ls9mo0xOED8CnVPvwikWfZ0tWbo6qqfLL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QB9BMQt5; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773927338; c=relaxed/simple;
+	bh=WNaFPSJ65Km60cVCyMp+oVFqdl7fIt+a+CpLzJ+gbvU=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=m8RP2TISd3MSwmP3efciwRF5NIxHPiszf3pvZn6wCm5AKd9Iva5TgmwzZ6oj94rsgOQ3B0eyQNvJNFU7qcmGOpZyoWmc3tA4t/OkjKvJD7r7jiXKC1FPK9QMSVoU35f6VKCFYs8VRM4E6P1ogcBsyWTEsVbRSABM4kJZUari0rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sessink.nl; spf=pass smtp.mailfrom=sessink.nl; dkim=pass (1024-bit key) header.d=sessink.nl header.i=@sessink.nl header.b=p5qPqgXA; arc=none smtp.client-ip=144.76.204.185
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sessink.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sessink.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QB9BMQt5"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-47d1d8a49f5so53040555e9.3
-        for <printing-users@lists.linux.dev>; Wed, 14 Jan 2026 00:18:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768378690; x=1768983490; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:cc:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+4iELnoBHRotj7+HdvkUzQ70ezj64JOZRxsxkE7NWS0=;
-        b=QB9BMQt5aEWHgezkS7y2aUm5cQoK1ILzWgUeGqC9Ga/JX6WHsGamJwRLoVy0YKewk2
-         BC/Y7ITEr26nEEZIXq5xeQ0cOBizIHzpDFwl0BkLxHpbUm/qnjAFJhNz9I4idf664jBl
-         /DN9oeLTc6qu1R1OYD7jkU6uHC8y2v7X4q/sbn3Ib8CkG0qNb5AASbes78HqXrf29Gua
-         hKmGSpquZtezhaI52vaRlYVJ/YnZVlwZMHEn8QgLTSwlNYZ5s86PoQpoDoTF0aXUmY1P
-         RizPtgnyUBmGMzF6sm/S9YkYdYeXZhiGz4AYG7mONl9IjPLTmSBl1DmRC238uENrtEyG
-         YlqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768378690; x=1768983490;
-        h=content-transfer-encoding:in-reply-to:from:cc:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+4iELnoBHRotj7+HdvkUzQ70ezj64JOZRxsxkE7NWS0=;
-        b=bPBEVrW8u2xGbVZ6DS+LdjFG4vk8+kB0bx0d6vOeJexObU5TrDYkFIyKBCWzS6CmuS
-         TQvb8jD4f9MMIGlTXlt5cudX5vgs9P/npbacFlz17FQsS6XnN5WZ6IUS28TK7GaZdCkm
-         L6pJI75LrOSkbHNRtH2u1FBGocxPlEB7H61WwAmx5mrP7n7K/813OHmoZE8lqQKEbCNM
-         /p4uLR0L6KBzog/DZ9x12mK52Vpj7TfeZHeT0ucyeVI+F6tlusG4bUVBg2eciF1hIIx0
-         drrs/ziWLWiBLiuCIXJl4dtORmuKBqdIezBLKeQc1LT0TpY2D/bT8HxMkcGjYBspLwpa
-         704A==
-X-Forwarded-Encrypted: i=1; AJvYcCXkyrvPDjHHWGqbNzAVbb9kzsrfFWkkJOrjLogzs5xu6CBI1yh5+5N9of40PpOjKV3k/WFl8MRT57eFt3elYA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz0k4Jx97I1G6U4oout4jAVlawk6axB3hME63BkGTXVtuQ5WIeY
-	gOyfmTxMX0324DhoOCHDIoVm0z8PxvSATEQ4AiznJgDFT7q5iN79Qgy2
-X-Gm-Gg: AY/fxX4NIJWPZ/w/QDSA1F74wP+S1VXY47Q525xCfZRRQhKRLaUEreCDqIGCeGIKGC9
-	Sgca4lPPuJWBeNyYs1gFo2tn4rt37Ob+sxsyN2a//f6MKQi5XO1S27pKGZCFqdwCVUxhOG3i5UH
-	zDHtW48gSCXlJfs4LwU5L7SpzonWfpKMpsRZ1xMGMi8BvFrVqrU6UMmvUMe+4s1e8DN4puF6m9k
-	plX4zyktxoZRAuevuWdmWcRqW/vymr/fxJWuPCckUrfULoVAHKR5SNTdKjf2ixQMQfs1nESLmfj
-	epTrdIA3TU+Rd3L9/5UFqwYdwY9xyN1j64AhIgKCvRK24oS3gGRgVcMx3AzeFASee4EYEqKYMZx
-	7b2r2JAJHrmsdLHr6MdK9OfCmtoHWs8Jt/lQ6IB8PwDbf0GDFtL7W9Pde85jMt3K4vQamTsm7OE
-	1Gsio9nQkkPRso1KZ8xnD33czRl1tdROk9jzSoKBoZbRbcy/w7JCmgRcMtweyDgeC76ak=
-X-Received: by 2002:a05:600c:5490:b0:47e:e20e:bba4 with SMTP id 5b1f17b1804b1-47ee3356e79mr17802125e9.18.1768378690159;
-        Wed, 14 Jan 2026 00:18:10 -0800 (PST)
-Received: from [192.168.68.113] (193-80-180-232.hdsl.highway.telekom.at. [193.80.180.232])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47ee55d42f0sm17286115e9.7.2026.01.14.00.18.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jan 2026 00:18:09 -0800 (PST)
-Message-ID: <f2884298-af5b-474b-9ab1-7fd93bc828bf@gmail.com>
-Date: Wed, 14 Jan 2026 09:18:08 +0100
+	dkim=pass (1024-bit key) header.d=sessink.nl header.i=@sessink.nl header.b="p5qPqgXA"
+Received: from localhost (localhost [127.0.0.1])
+	by filter.openoffice.nl (Postfix) with ESMTP id E4750100447
+	for <printing-users@lists.linux.dev>; Thu, 19 Mar 2026 14:28:58 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at filter.openoffice.nl
+Received: from filter.openoffice.nl ([127.0.0.1])
+	by localhost (filter.openoffice.nl [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id atYkXgW152lR for <printing-users@lists.linux.dev>;
+	Thu, 19 Mar 2026 14:28:58 +0100 (CET)
+Received: from blub.net (mail.blub.net [95.217.39.243])
+	by filter.openoffice.nl (Postfix) with ESMTP id 88A661003BA
+	for <printing-users@lists.linux.dev>; Thu, 19 Mar 2026 14:28:58 +0100 (CET)
+Received: from [192.168.102.110] (84-86-8-46.fixed.kpn.net [84.86.8.46])
+	by blub.net (Postfix) with ESMTPSA id 5071F3001E0
+	for <printing-users@lists.linux.dev>; Thu, 19 Mar 2026 14:28:58 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sessink.nl; s=201802;
+	t=1773926938; bh=WNaFPSJ65Km60cVCyMp+oVFqdl7fIt+a+CpLzJ+gbvU=;
+	h=Date:To:From:Subject:From;
+	b=p5qPqgXAbFZhT8YI2CgxwhpaT9Bch0t7DgWI6AEdYhhJJGkQMj674N70L7VEZbrHf
+	 +L59cLfWW+wbCd0+i+eTYqJF/qgVh2ueGcxIVxm1lAuAJo4mFQX3YWXQMisHo/99nH
+	 UUHPQ9ZzsORinj9cm8NxQdhM7Ghu0eO5p3XTL2Ek=
+Message-ID: <40ecc01e-69e6-4bb6-a98e-775cabd4091b@sessink.nl>
+Date: Thu, 19 Mar 2026 14:28:57 +0100
 Precedence: bulk
 X-Mailing-List: printing-users@lists.linux.dev
 List-Id: <printing-users.lists.linux.dev>
@@ -68,70 +44,70 @@ List-Subscribe: <mailto:printing-users+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:printing-users+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Inquiry Regarding RISC-V Architecture Support
-To: =?UTF-8?B?6buE6KiA5Lyf?= <yanwei.huang@deepcomputing.io>,
- "printing-users@lists.linux.dev" <printing-users@lists.linux.dev>,
- "printing-architecture@lists.linux.dev"
- <printing-architecture@lists.linux.dev>
-References: <7c9337b79c412431401958354b131e22fbf4940c.f8c4ec63.d1dc.40e3.93fe.7ecf7c83f66f@feishu.cn>
-Content-Language: en-US
-Cc: Yuning Liang <yuning.liang@deepcomputing.io>
-From: Till Kamppeter <till.kamppeter@gmail.com>
-In-Reply-To: <7c9337b79c412431401958354b131e22fbf4940c.f8c4ec63.d1dc.40e3.93fe.7ecf7c83f66f@feishu.cn>
+Content-Language: nl-NL
+To: "printing-users@lists.linux.dev" <printing-users@lists.linux.dev>
+From: Valentijn Sessink <valentijn@sessink.nl>
+Subject: driverless printing and custom paper size
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 1/13/26 07:28, 黄言伟 wrote:
-> Dear OpenPrinting Team,
-> 
-> I hope this email finds you well. Please accept my apologies for any inconvenience. I am an enthusiast of RISC-V architecture and own several RISC-V devices. I am writing to inquire whether OpenPrinting supports the RISC-V architecture.
-> 
-> If support is available, could you kindly provide guidance on how to install and run printer drivers on my RISC-V devices? Any assistance you could offer would be greatly appreciated.
-> 
-> Thank you for your time and support.
-> 
-> Best regards,
-> Yanwei
-> 
+Hi List,
 
-The printing stack consisting of CUPS, cups-filters, Ghostscript, and other 
-components works on RISC-V. This is thanks to the portable way of coding applied 
-by most open-source developers, especially also the developers working on said 
-components of the printing stack.
+I have the feeling that I'm in a catch-22 situation. I have a custom 
+paper size (being a derivative of the European A4 210x297mm, this one's 
+224x297).
 
-So distros which publish a RISC-V version contain a working printing stack and 
-driverless IPP printers (practically all modern ones are, AirPrint, Mopria, IPP 
-Everywhere) just work with them. Also there are many open-source printer drivers 
-for many legacy and specialty printers of the last 30 or 40 years, and distros 
-usually include many of those.
+Now the printer manufacturer tells me: "define the custom width and 
+length of the paper in the print driver software and on the printer 
+control panel" - essentially telling me: no, we don't advertise the 
+paper sizes you entered on the printer, you'll have to re-define them 
+locally.
 
-I by myself have tested the printing stack on RISC-V, running Ubuntu on the 
-first DC ROMA mainboard for Framework laptops a year ago and everything built 
-and worked for me, both with standard Debian packages and with Snap packages:
+However, the printer itself is perfectly able to print driverless - or 
+at least, that is what I'm thinking when a printer just seems to "add 
+itself" through cups-browsed.
 
-https://openprinting.github.io/OpenPrinting-News-We-got-a-Framework-RISC-V-board-from-DeepComputing/
+This is a Xerox Altalink C8155
+cups.lpoptions -p Xerox_AltaLink_C8155_A0_6A_FC -l
+... tells me:
+PageSize/Media Size: 12x19 3.5x5.5 4x6 5x7 6x9 8x10 A3 *A4 A5 A6 ARCHA 
+ARCHB B4 B5 B6 Env10 Env9 EnvC4 EnvC5 EnvC6 EnvDL EnvMonarch EnvPersonal 
+Executive FanFoldGermanLegal FolioSP ISOB4 ISOB5 ISOB6 Legal Letter 
+Oficio SRA3 Statement Tabloid Custom.WIDTHxHEIGHT
+InputSlot/Media Source: *Auto Tray1 Tray2 Tray3 Tray4 Tray5
+MediaType/Media Type: *Auto Stationery StationeryPreprinted 
+StationeryLetterhead StationeryPrepunched StationeryLightweight 
+Transparency Envelope EnvelopePlain EnvelopeWindow Labels Cardstock
+cupsPrintQuality/cupsPrintQuality: Draft *Normal High
+ColorModel/Output Mode: *RGB Gray
+Duplex/Duplex: *None DuplexNoTumble DuplexTumble
+OutputBin/OutputBin: *Auto Left Middle Top
+StapleLocation/StapleLocation: *None SaddleStitch SinglePortrait 
+SingleRevLandscape SingleLandscape SingleRevPortrait EdgeStitchPortrait 
+EdgeStitchLandscape EdgeStitchRevPortrait EdgeStitchRevLandscape 
+DualPortrait DualLandscape DualRevPortrait DualRevLandscape BindPortrait 
+BindLandscape BindRevPortrait BindRevLandscape
+FoldType/FoldType: *None Auto Half
+PunchMedia/PunchMedia: *None DualPortrait DualLandscape DualRevPortrait 
+DualRevLandscape QuadPortrait QuadLandscape QuadRevPortrait QuadRevLandscape
+Booklet/Booklet: *False True
+cupsFinishingTemplate/cupsFinishingTemplate: *none JogOffset
 
-With this I know that printing with my driverless IPP printer just works as it 
-does with an x86 client, but for all the old printer drivers I only know that 
-they build on RISC-V. As I do not have all these printers and as many of the 
-drivers are written by hobby programmers who just wanted to get their printer to 
-work and perhaps did not make their code that portable (at least I did not see 
-many complaints from users of non-x86 architectures, like ARM or so) I am not 
-sure whether all of them will actually work correctly on RISC-V.
+However, I manually told the printer that Tray 1 now contains 224 x 
+297mm paper.
 
-I was responsible for the Ubuntu packaging of the printing stack in that time 
-and when testing on RISC-V I did not modify or fix any of the packages for 
-RISC-V issues. They all just worked (or at least built in case of legacy printer 
-drivers). I only needed to activate RISC-V builds for our Snaps in the Snap Store.
+https://www.support.xerox.com/en-us/article/KB0028639 is the Define 
+Custom Paper Sizes page from Xerox, that tells to edit the local printer 
+driver settings.
 
-What is really a problem are printers which need proprietary drivers, as those 
-drivers are closed source only available for x86. Here one would need to run an 
-x86 emulator. This approach is already made use of. We have a contributor at 
-OpenPrinting who sells ARM-based SBCs to turn legacy printers into driverless 
-IPP printers and he does not only install all open-source drivers on them but 
-also an x86 emulation framework to allow running proprietary drivers.
+I hope someone has an idea how to proceed. Next thing I'll try is to 
+actually "add" the printer manually, then change the local paper size in 
+the PPD - but that doesn't make me all too happy because it means 
+editing it on every computer that needs to print...
 
-Fortunately these printers which need proprietary drivers are rather rare nowadays.
+Best regards,
 
-    Till
+Valentijn
+-- 
+Durgerdamstraat 29, 1507 JL Zaandam; telefoon 075-7100071
 
